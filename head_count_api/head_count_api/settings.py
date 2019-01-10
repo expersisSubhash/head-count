@@ -131,7 +131,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+# Upload external files and media
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+
+MEDIA_URL = '/uploads/'
+
 try:
-    from head_count_api.local_settings import *
+    from terragraph.local_settings import *
+    STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_cdn')
 except ImportError:
-    pass
+    print("Import Error for local_settings file")
+
+VERSION = "1.0.0"
