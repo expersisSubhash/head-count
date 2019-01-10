@@ -1,1 +1,4 @@
-head_count_api/.idea/
+.idea
+*.pyc
+.DS_Store
+static_cdn
