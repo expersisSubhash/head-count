@@ -18,7 +18,7 @@ from rest_framework.response import Response
 @permission_classes((AllowAny, ))
 def login(request):
     context_data = dict()
-    username = request.data.get("username")
+    username = request.data.get("email")
     password = request.data.get("password")
     if username is None or password is None:
         return Response({'error': 'Please provide both username and password'},
@@ -29,5 +29,6 @@ def login(request):
                         status=HTTP_404_NOT_FOUND)
     token, _ = Token.objects.get_or_create(user=user)
     context_data['token'] = token.key
-    context_data['user'] = {'id': user.id, 'email': user.email}
+    context_data['user'] = {'id': user.id, 'email': user.email,
+                            'first_name': user.first_name, 'last_name': user.last_name}
     return Response(context_data, status=HTTP_200_OK)
