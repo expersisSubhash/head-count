@@ -141,7 +141,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/uploads/'
 
 try:
-    from terragraph.local_settings import *
+    from head_count_api.local_settings import *
     STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_cdn')
 except ImportError:
     print("Import Error for local_settings file")
