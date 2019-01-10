@@ -4,6 +4,7 @@
 }
 .navbar-default .navbar-brand {
   color: #ffffff;
+  margin-left: 40px;
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
@@ -190,4 +191,24 @@
 .dropdown-menu {
   /*min-width: 100%;*/
   margin-top: 15px;
+}
+
+.toggle-menu {
+  font-size: 25px;
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  border: 1px solid white;
+  height: 33px;
+  padding: 0 5px;
+}
+
+.toggle-menu, .toggle-menu a {
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+.toggle-menu:hover, .toggle-menu a:hover {
+  color: #dddddd;
 }

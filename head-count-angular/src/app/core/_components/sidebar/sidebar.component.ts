@@ -1,5 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../_services/auth.service';
+import {SidebarService} from '../../_services/sidebar.service';
+import {takeWhile} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,12 +10,14 @@ import {AuthService} from '../../_services/auth.service';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-
+  isShow = false;
   menuList: Array<any> = [
     {
       header: 'Dashboard',
       menus: [
-        {name: 'Dashboard', url: '/dashboard'},
+        {name: 'Snacks', url: '/snacks'},
+        {name: 'Users', url: '/users'},
+        {name: 'snack-day', url: '/snack-day'},
       ],
       role: 'normal'
     },
@@ -20,9 +25,26 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   isAlive = true;
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private router: Router, private sidebarService: SidebarService) { }
 
-  ngOnInit() {
+   ngOnInit() {
+    this.sidebarService.$data.subscribe(data => {
+      this.isShow = data;
+      // if (this.isShow) {
+      //   this.renderer.addClass(this.document.body, 'back');
+      // } else {
+      //   this.renderer.removeClass(this.document.body, 'back');
+      // }
+    });
+  }
+
+  openRouterLink(url: string) {
+    this.router.navigate([url]);
+    this.close();
+  }
+
+  close() {
+    this.sidebarService.close();
   }
 
   ngOnDestroy() {

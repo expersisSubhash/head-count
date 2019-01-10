@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
           this.authService.isLoggedIn = true;
           this.loginError = false;
         }
-        this.router.navigate([this.authService.redirectUrl || '/dashboard']);
+        this.router.navigate([this.authService.redirectUrl || `/snack-detail`]);
       },
       error => {
         this.alertService.clear();

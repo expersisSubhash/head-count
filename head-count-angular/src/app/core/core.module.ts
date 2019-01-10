@@ -12,6 +12,13 @@ import {NavbarComponent} from './_components/navbar/navbar.component';
 import {SidebarComponent} from './_components/sidebar/sidebar.component';
 import {BsDropdownModule, ModalModule} from 'ngx-bootstrap';
 import {SoftwareService} from './_services/software.service';
+import {UserSnacksDetailComponent} from './_components/user-snacks-detail/user-snacks-detail.component';
+import {SnacksListComponent} from './_components/snacks-list/snacks-list.component';
+import {NewSnackComponent} from './_components/new-snack/new-snack.component';
+import {UserListComponent} from './_components/user-list/user-list.component';
+import {NewUserComponent} from './_components/new-user/new-user.component';
+import {SidebarService} from './_services/sidebar.service';
+import { SnackDayComponent } from './_components/snack-day/snack-day.component';
 
 @NgModule({
   imports: [
@@ -29,10 +36,17 @@ import {SoftwareService} from './_services/software.service';
     DashboardComponent,
     NavbarComponent,
     SidebarComponent,
+    UserSnacksDetailComponent,
+    SnacksListComponent,
+    NewSnackComponent,
+    UserListComponent,
+    NewUserComponent,
+    SnackDayComponent,
   ],
   providers: [
     AuthService,
     SoftwareService,
+    SidebarService
   ],
 })
 export class CoreModule { }

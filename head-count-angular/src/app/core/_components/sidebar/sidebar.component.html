@@ -1,4 +1,4 @@
-<div class="sidebar">
+<div class="sidebar" [ngClass]="{'in': isShow}">
   <ul class="nav nav-sidebar" style="margin-top: 10px;">
     <ng-template ngFor let-item [ngForOf]="menuList" let-i="index">
       <!--<li class="link-header"><a>{{ item.header }}</a></li>-->
