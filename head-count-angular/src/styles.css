@@ -1,0 +1,8 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  overflow-x: hidden;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}

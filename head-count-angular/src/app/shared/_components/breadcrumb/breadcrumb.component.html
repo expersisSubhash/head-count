@@ -1,0 +1,10 @@
+<ol class="breadcrumb custom-breadcrumb">
+  <li *ngFor="let breadcrumb of breadcrumbs; let last=last;let i = index;" [ngClass]="{'breadcrumb-item': true, 'active': last}">
+    <a *ngIf="!last" routerLink="{{breadcrumb.url}}" [queryParams]="breadcrumb.params">
+      {{ breadcrumb.label }}
+    </a>
+    <span *ngIf="last">
+      {{ breadcrumb.label }}
+    </span>
+  </li>
+</ol>
