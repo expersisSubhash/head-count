@@ -7,13 +7,20 @@
 /*transition: all 0.5s ease;*/
 /*}*/
 
+/* You can add global styles to this file, and also import other style files */
+.bg-sky, .panel-sky > .panel-heading {
+  background-color: #eeeeee;
+  color: #425f9e;
+  font-weight: bold;
+}
+
 body {
   background: #fff;
   margin: 50px 0;
   padding: 0;
   color: #000;
-  font-family: "Josefin Sans", sans-serif;
-  font-size: 20px;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: 16px;
   overflow-x: hidden;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;

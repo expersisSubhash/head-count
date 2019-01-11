@@ -1,0 +1,13 @@
+<div class="modal-header custom-modal-header">
+  <button type="button" class="close" aria-label="Close" (click)="onCancelButton($event)">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h4 class="modal-title">{{ title }}</h4>
+</div>
+<div class="modal-body">
+  {{ body }}
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary btn-sm" (click)="onActionButton($event)">{{ actionButtonName }}</button>
+  <button type="button" class="btn btn-default btn-sm" (click)="onCancelButton($event)">Cancel</button>
+</div>

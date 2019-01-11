@@ -43,8 +43,8 @@
 .nav-sidebar > .active > a,
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
-  color: #23527c;
-  background-color: lightsteelblue; /* #428bca */
+  color: white;
+  background-color: #553fc7; /* #428bca */
   border-radius: 5px;
 }
 

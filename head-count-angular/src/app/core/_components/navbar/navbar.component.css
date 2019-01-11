@@ -216,7 +216,8 @@
 
 .navbar {
   border-radius: 0;
-  background: #1b96ed;
+  background: #553fc7;
+  /*background: #cb202d;*/
   color: #fff;
   border: 1px solid transparent;
 }
@@ -231,7 +232,7 @@
 }
 
 .nav-time {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .navc {
@@ -246,8 +247,8 @@
 }
 
 .fa-bars {
-  font-size: 26px;
-  font-weight: 500;
+  font-size: 22px;
+  font-weight: 400;
 }
 
 .t-brand {
