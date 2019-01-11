@@ -11,8 +11,8 @@ import {User} from '../_models/user';
 export class UserService {
   constructor(
     private http: HttpClient
-
-  ) { }
+  ) {
+  }
 
   getAllUsers(): Observable<any> {
     return this.http.get<User>('/api/users/');
@@ -25,5 +25,10 @@ export class UserService {
   editUser(formData): Observable<any> {
     return this.http.put(`/api/editUser/${formData.id}/`, formData);
   }
+
+  removeUser(id): Observable<any> {
+    return this.http.delete(`/api/removeUser/${id}/`);
+  }
+
 
 }
