@@ -18,8 +18,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
       menus: [
         {name: 'Snacks', url: '/snacks'},
         {name: 'Users', url: '/users'},
-        {name: 'snack-day', url: '/snack-day'},
-        {name: 'Logout', url: '/login'},
+        {name: 'snack-day', url: '/snack-day'}
       ],
       role: 'normal'
     },

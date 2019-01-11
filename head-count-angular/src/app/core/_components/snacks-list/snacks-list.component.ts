@@ -10,6 +10,7 @@ export class SnacksListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('in Snack list');
   }
 
 }

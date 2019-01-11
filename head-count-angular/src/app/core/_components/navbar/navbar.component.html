@@ -28,7 +28,11 @@
       <span class="t-brand"><a (click)="openRouterLink('/')">{{ projectTitle }}</a></span>
     </div>
     <div class="r nav-bal">
-      <div class="nav-time">{{ now | date: 'h:mm a' }}</div>
+      <div class="nav-time">
+      <span>{{ now | date: 'h:mm a' }}</span>
+      <span style="padding-left: 10px"><a (click)="logout()">Logout</a></span>
+      </div>
+
     </div>
     <div class="clr"></div>
   </div>
