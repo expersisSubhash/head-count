@@ -43,6 +43,7 @@ def login(request):
 
 
 @api_view(['GET', 'POST'])
+@permission_classes((AllowAny, ))
 def user_list(request):
     context_data = dict()
     msg = ''
