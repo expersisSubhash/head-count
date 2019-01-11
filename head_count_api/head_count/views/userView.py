@@ -72,3 +72,50 @@ def user_list(request):
     context_data[constants.RESPONSE_ERROR] = error
     context_data[constants.RESPONSE_MESSAGE] = msg
     return JsonResponse(context_data, status=200)
+
+
+@api_view(['GET', 'POST', 'DELETE'])
+@permission_classes((AllowAny, ))
+def user_detail(request, pk):
+    context_data = dict()
+    try:
+        try:
+            user = User.objects.get(pk=pk)
+            error = False
+            msg = 'PDU found.'
+        except User.DoesNotExist:
+            user = None
+            error = True
+            msg = 'PDU does not exist.'
+
+        if not error:
+            if request.method == 'GET':
+                serializer = UserSerializer(user)
+                context_data['pdu'] = serializer.data
+
+            elif request.method == 'PUT':
+                data = JSONParser().parse(request)
+                serializer = UserSerializer(user, data=data)
+                if serializer.is_valid():
+                    serializer.save()
+                    msg = 'PUD is updated.'
+                else:
+                    error = True
+                    msg = ', '.join(get_custom_error_list(serializer.errors))
+
+            elif request.method == 'DELETE':
+                user.delete()
+                msg = 'PDU is deleted.'
+
+            else:
+                error = True
+                msg = 'Invalid http method.'
+
+    except Exception as e:
+        error = True
+        msg = "Something went wrong while working on PUD. Error : " + str(e)
+
+    context_data[constants.RESPONSE_ERROR] = error
+    context_data[constants.RESPONSE_MESSAGE] = msg
+    return JsonResponse(context_data, status=200)
+

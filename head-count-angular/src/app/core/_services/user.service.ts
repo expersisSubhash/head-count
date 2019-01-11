@@ -18,4 +18,12 @@ export class UserService {
     return this.http.get<User>('/api/users/');
   }
 
+  newUser(formData): Observable<any> {
+    return this.http.post<any>('/api/users/', formData);
+  }
+
+  editUser(formData): Observable<any> {
+    return this.http.put(`/api/editUser/${formData.id}/`, formData);
+  }
+
 }
