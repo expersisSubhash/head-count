@@ -3,6 +3,6 @@ from head_count.views import userView
 
 urlpatterns = [
     url('api-token-auth/', userView.login),
-    url(r'^devices/$', userView.user_list),
+    url(r'^users/$', userView.user_list),
 
 ]
