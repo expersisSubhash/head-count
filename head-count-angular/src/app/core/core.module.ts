@@ -11,7 +11,6 @@ import { DashboardComponent } from './_components/dashboard/dashboard.component'
 import {NavbarComponent} from './_components/navbar/navbar.component';
 import {SidebarComponent} from './_components/sidebar/sidebar.component';
 import {BsDropdownModule, ModalModule} from 'ngx-bootstrap';
-import {SoftwareService} from './_services/software.service';
 import {UserSnacksDetailComponent} from './_components/user-snacks-detail/user-snacks-detail.component';
 import {SnacksListComponent} from './_components/snacks-list/snacks-list.component';
 import {NewSnackComponent} from './_components/new-snack/new-snack.component';
@@ -45,7 +44,6 @@ import { SnackDayComponent } from './_components/snack-day/snack-day.component';
   ],
   providers: [
     AuthService,
-    SoftwareService,
     SidebarService
   ],
 })
