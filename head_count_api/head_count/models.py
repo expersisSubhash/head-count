@@ -8,6 +8,7 @@ class Snack(models.Model):
     name = models.CharField(max_length=255, null=True, verbose_name="name")
     default_price = models.FloatField(default=0.0)
     image_name = models.CharField(max_length=100, null=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Snack"

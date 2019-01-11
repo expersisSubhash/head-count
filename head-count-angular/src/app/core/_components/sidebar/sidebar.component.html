@@ -4,7 +4,7 @@
       <!--<li class="link-header"><a>{{ item.header }}</a></li>-->
       <ng-container *ngFor="let menu of item.menus">
         <li routerLinkActive="active">
-          <a [routerLink]="[menu.url]">{{ menu.name }}</a>
+          <a (click)="openRouterLink(menu.url)">{{ menu.name }}</a>
         </li>
       </ng-container>
     </ng-template>

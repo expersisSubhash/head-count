@@ -32,9 +32,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private sidebarService: SidebarService,
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2
-  ) { }
+  ) {
+  }
 
-   ngOnInit() {
+  ngOnInit() {
     this.sidebarService.$data.subscribe(data => {
       this.isShow = data;
       if (this.isShow) {

@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.projectTitle = 'Xebrium';
     setInterval(() => {
       this.now = new Date();
-    }, 1);
+    }, 600);
   }
 
   openRouterLink(url: string) {
