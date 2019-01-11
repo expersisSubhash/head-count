@@ -3,8 +3,9 @@
  */
 
 /* Hide for mobile, show later */
+/*16.66666667%;*/
 .sidebar {
-  width: 16.66666667%;
+  width: 240px;
   position: fixed;
   top: 51px;
   bottom: 0;

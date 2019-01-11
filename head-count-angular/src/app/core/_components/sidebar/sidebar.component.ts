@@ -1,8 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {AuthService} from '../../_services/auth.service';
 import {SidebarService} from '../../_services/sidebar.service';
 import {takeWhile} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,6 +19,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
         {name: 'Snacks', url: '/snacks'},
         {name: 'Users', url: '/users'},
         {name: 'snack-day', url: '/snack-day'},
+        {name: 'Logout', url: '/login'},
       ],
       role: 'normal'
     },
@@ -25,16 +27,22 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   isAlive = true;
 
-  constructor(private auth: AuthService, private router: Router, private sidebarService: SidebarService) { }
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private sidebarService: SidebarService,
+    @Inject(DOCUMENT) private document: Document,
+    private renderer: Renderer2
+  ) { }
 
    ngOnInit() {
     this.sidebarService.$data.subscribe(data => {
       this.isShow = data;
-      // if (this.isShow) {
-      //   this.renderer.addClass(this.document.body, 'back');
-      // } else {
-      //   this.renderer.removeClass(this.document.body, 'back');
-      // }
+      if (this.isShow) {
+        this.renderer.addClass(this.document.body, 'back');
+      } else {
+        this.renderer.removeClass(this.document.body, 'back');
+      }
     });
   }
 

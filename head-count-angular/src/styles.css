@@ -1,8 +1,54 @@
 /* You can add global styles to this file, and also import other style files */
+/*body {*/
+/*overflow-x: hidden;*/
+/*-webkit-transition: all 0.5s ease;*/
+/*-moz-transition: all 0.5s ease;*/
+/*-o-transition: all 0.5s ease;*/
+/*transition: all 0.5s ease;*/
+/*}*/
+
 body {
+  background: #fff;
+  margin: 50px 0;
+  padding: 0;
+  color: #000;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 20px;
   overflow-x: hidden;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+  transition: all 0.5s ease
 }
+
+.back {
+  background: rgba(0, 0, 0, .4);
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+a:hover, a:active, a:focus {
+  text-decoration: none !important;
+}
+
+.l {
+  float: left;
+}
+
+.r {
+  float: right;
+}
+
+.clr {
+  clear: both;
+}
+
+.jumbotron {
+    background: none;
+    padding: 20px 0
+}
+
+

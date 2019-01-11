@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   user: any;
   projectTitle: string;
   isAlive = true;
+  now: Date;
 
   constructor(
     private authService: AuthService,
@@ -24,6 +25,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.user = this.authService.getUserInfo();
     this.projectTitle = 'Xebrium';
+    setInterval(() => {
+      this.now = new Date();
+    }, 1);
+  }
+
+  openRouterLink(url: string) {
+    this.router.navigate([url]);
+    this.sidebarService.close();
   }
 
   ngOnDestroy() {
