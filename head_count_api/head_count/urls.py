@@ -9,6 +9,8 @@ urlpatterns = [
 
     url(r'^removeUser/(?P<pk>[0-9]+)/$', userView.user_detail),
 
-
+    url(r'^snacks/$', snackView.snack_list),
+    url(r'^getSnack/(?P<pk>[0-9]+)/$', snackView.snack_detail),
+    url(r'^editSnacks/(?P<pk>[0-9]+)/$', snackView.snack_detail),
 
 ]

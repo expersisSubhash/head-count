@@ -71,7 +71,7 @@ def user_list(request):
             error = True
             msg = 'Invalid http method'
     except Exception as e:
-        msg = 'Something went wrong while fetching PDU list. Message : ' + str(e)
+        msg = 'Something went wrong while fetching User list. Message : ' + str(e)
         error = True
 
     context_data[constants.RESPONSE_ERROR] = error

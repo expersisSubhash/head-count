@@ -30,5 +30,9 @@ export class SnackService {
     return this.http.delete(`/api/removeSnacks/${id}/`);
   }
 
+  getSnack(id): Observable<any> {
+    return this.http.get<any>(`/api/getSnack/${id}/`);
+  }
+
 
 }

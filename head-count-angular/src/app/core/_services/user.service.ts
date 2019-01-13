@@ -19,6 +19,8 @@ export class UserService {
   }
 
   newUser(formData): Observable<any> {
+    console.log('inside /api/newUser/');
+    console.log(formData);
     return this.http.post<any>('/api/users/', formData);
   }
 

@@ -52,7 +52,7 @@ def snack_list(request):
     return JsonResponse(context_data, status=200)
 
 
-@api_view(['GET', 'POST', 'DELETE'])
+@api_view(['GET', 'POST', 'DELETE', 'PUT'])
 @permission_classes((AllowAny, ))
 def snack_detail(request, pk):
     context_data = dict()

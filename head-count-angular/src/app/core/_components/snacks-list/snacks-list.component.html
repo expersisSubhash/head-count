@@ -3,7 +3,7 @@
   </div>
   <div class="col-sm-12 col-md-9 col-lg-9">
     <div class="text-right">
-      <button type="button" class="btn btn-primary btn-sm" >New Snack</button>
+      <button type="button" class="btn btn-primary btn-sm" (click)="newSnack()">New Snack</button>
     </div>
   </div>
 </div>
@@ -13,15 +13,19 @@
       <table class="table table-striped text-center">
         <thead class="bg-sky">
           <tr>
-             <th>Employee Name</th>
+             <th>Name</th>
+              <th>Price</th>
+
              <th style="width: 60px;"></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let obj of snackList;">
              <td style="text-align: left">{{ obj.name }} </td>
+            <td style="text-align: left">{{ obj.default_price }} </td>
+
              <td>
-               <span style="margin-left: 5px;"><a ><i class="glyphicon glyphicon-pencil" title="Modify User's details"></i></a></span>
+               <span style="margin-left: 5px;"><a (click)="newSnack(obj)"><i class="glyphicon glyphicon-pencil" title="Modify User's details"></i></a></span>
                <span style="margin-left: 5px;"><a ><i class="glyphicon glyphicon-trash" title="Delete User"></i></a></span>
              </td>
           </tr>

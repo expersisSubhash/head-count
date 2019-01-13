@@ -51,6 +51,7 @@ import { ConfirmAlertBoxComponent } from './_components/shared/confirm-alert-box
   entryComponents: [
     NewUserComponent,
     ConfirmAlertBoxComponent,
+    NewSnackComponent
   ],
 
 })
