@@ -10,6 +10,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AuthGuard} from './guards/auth.guard';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from './http-interceptors/auth-interceptor';
+import {NewUserComponent} from './core/_components/new-user/new-user.component';
 
 
 @NgModule({

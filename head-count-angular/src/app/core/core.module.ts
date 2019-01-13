@@ -49,7 +49,8 @@ import { ConfirmAlertBoxComponent } from './_components/shared/confirm-alert-box
     SidebarService
   ],
   entryComponents: [
-    ConfirmAlertBoxComponent
+    NewUserComponent,
+    ConfirmAlertBoxComponent,
   ],
 
 })

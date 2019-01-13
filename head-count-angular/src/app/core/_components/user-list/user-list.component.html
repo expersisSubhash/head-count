@@ -20,6 +20,7 @@
         <tbody>
           <tr *ngFor="let obj of userList;">
              <td style="text-align: left">{{ obj.first_name }} {{ ' ' + obj.last_name }}</td>
+
              <td>
                <span style="margin-left: 5px;"><a (click)="newUser(obj)"><i class="glyphicon glyphicon-pencil" title="Modify User's details"></i></a></span>
                <span style="margin-left: 5px;"><a (click)="deleteUser(obj)"><i class="glyphicon glyphicon-trash" title="Delete User"></i></a></span>

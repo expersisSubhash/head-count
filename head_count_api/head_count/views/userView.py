@@ -55,6 +55,11 @@ def user_list(request):
             context_data['user_list'] = serializer.data
         elif request.method == 'POST':
             data = JSONParser().parse(request)
+            # Get email from data
+            email = data['email']
+            data['username'] = email
+            # Default password
+            data['password'] = 'png'
             serializer = UserSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
@@ -74,7 +79,7 @@ def user_list(request):
     return JsonResponse(context_data, status=200)
 
 
-@api_view(['GET', 'POST', 'DELETE'])
+@api_view(['GET', 'POST', 'DELETE', 'PUT'])
 @permission_classes((AllowAny, ))
 def user_detail(request, pk):
     context_data = dict()
@@ -95,6 +100,10 @@ def user_detail(request, pk):
 
             elif request.method == 'PUT':
                 data = JSONParser().parse(request)
+                # Get email from data
+                email = data['email']
+                data['username'] = email
+
                 serializer = UserSerializer(user, data=data)
                 if serializer.is_valid():
                     serializer.save()

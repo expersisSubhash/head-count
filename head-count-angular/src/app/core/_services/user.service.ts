@@ -23,11 +23,17 @@ export class UserService {
   }
 
   editUser(formData): Observable<any> {
+    console.log('inside /api/editUser/');
+    console.log(formData);
     return this.http.put(`/api/editUser/${formData.id}/`, formData);
   }
 
   removeUser(id): Observable<any> {
     return this.http.delete(`/api/removeUser/${id}/`);
+  }
+
+  getuserDetails(id): Observable<any> {
+    return this.http.get(`/api/getUser/${id}/`);
   }
 
 

@@ -2,7 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../_services/user.service';
 import {User} from '../../_models/user';
 import {takeWhile} from 'rxjs/internal/operators';
-import {ConfirmAlertBoxService} from '../../_components/shared/confirm-alert-box/confirm-alert-box.service';
+import {NewUserComponent} from '../new-user/new-user.component';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import {ConfirmAlertBoxService} from '../../_services/confirm-alert-box.service';
+
 
 @Component({
   selector: 'app-user-list',
@@ -12,8 +15,12 @@ import {ConfirmAlertBoxService} from '../../_components/shared/confirm-alert-box
 export class UserListComponent implements OnInit {
   private alive = true;
   userList: Array<User>;
+  bsModalRef: BsModalRef;
+
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private bsModalService: BsModalService,
+    private confirmBoxService: ConfirmAlertBoxService
   ) {
   }
 
@@ -31,26 +38,26 @@ export class UserListComponent implements OnInit {
       });
   }
 
-    deleteUser(obj) {
-    // this.confirmBoxService.confirmBox({
-    //   body: `Are you sure you wish to remove ${obj.username} ?`,
-    //   callback: () => {
-    //     this.pduService.deletePdu(obj.id).pipe(takeWhile(() => this.isAlive)).subscribe(data => {
-    //       this.getPduList();
-    //     });
-    //   }
-    // });
+  deleteUser(obj) {
+    this.confirmBoxService.confirmBox({
+      body: `Are you sure you wish to remove ${obj.username} ?`,
+      callback: () => {
+        this.userService.removeUser(obj.id).pipe(takeWhile(() => this.alive)).subscribe(data => {
+          this.getuserList();
+        });
+      }
+    });
   }
 
-    newUser(obj) {
-    // this.confirmBoxService.confirmBox({
-    //   body: `Are you sure you wish to remove ${obj.username} ?`,
-    //   callback: () => {
-    //     this.pduService.deletePdu(obj.id).pipe(takeWhile(() => this.isAlive)).subscribe(data => {
-    //       this.getPduList();
-    //     });
-    //   }
-    // });
+  newUser(obj?) {
+    this.bsModalRef = this.bsModalService.show(NewUserComponent, {ignoreBackdropClick: true});
+    if (obj) {
+      this.bsModalRef.content.onEdit(obj);
+    }
+    this.bsModalRef.content.submitEvent.pipe(takeWhile(() => this.alive)).subscribe(data => {
+      this.getuserList();
+    });
   }
-
 }
+
+
