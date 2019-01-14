@@ -5,6 +5,7 @@ import {takeWhile} from 'rxjs/internal/operators';
 import {NewUserComponent} from '../new-user/new-user.component';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {NewSnackComponent} from '../new-snack/new-snack.component';
+import {ConfirmAlertBoxService} from '../../_services/confirm-alert-box.service';
 
 @Component({
   selector: 'app-snacks-list',
@@ -21,6 +22,7 @@ export class SnacksListComponent implements OnInit, OnDestroy {
   constructor(
     private snackService: SnackService,
     private bsModalService: BsModalService,
+    private confirmBoxService: ConfirmAlertBoxService
   ) {
   }
 
@@ -43,6 +45,17 @@ export class SnacksListComponent implements OnInit, OnDestroy {
     }
     this.bsModalRef.content.submitEvent.pipe(takeWhile(() => this.alive)).subscribe(data => {
       this.getAllSnacks();
+    });
+  }
+
+  deleteSnack(obj) {
+    this.confirmBoxService.confirmBox({
+      body: `Are you sure you wish to remove ${obj.name} ?`,
+      callback: () => {
+        this.snackService.removeSnacks(obj.id).pipe(takeWhile(() => this.alive)).subscribe(data => {
+          this.getAllSnacks();
+        });
+      }
     });
   }
 

@@ -18,7 +18,7 @@ import {UserListComponent} from './_components/user-list/user-list.component';
 import {NewUserComponent} from './_components/new-user/new-user.component';
 import {SidebarService} from './_services/sidebar.service';
 import { SnackDayComponent } from './_components/snack-day/snack-day.component';
-import { ConfirmAlertBoxComponent } from './_components/shared/confirm-alert-box/confirm-alert-box.component';
+import {ConfirmAlertBoxComponent} from './_components/confirm-alert-box/confirm-alert-box.component';
 
 @NgModule({
   imports: [
@@ -42,7 +42,7 @@ import { ConfirmAlertBoxComponent } from './_components/shared/confirm-alert-box
     UserListComponent,
     NewUserComponent,
     SnackDayComponent,
-    ConfirmAlertBoxComponent,
+    ConfirmAlertBoxComponent
   ],
   providers: [
     AuthService,
@@ -50,8 +50,8 @@ import { ConfirmAlertBoxComponent } from './_components/shared/confirm-alert-box
   ],
   entryComponents: [
     NewUserComponent,
-    ConfirmAlertBoxComponent,
-    NewSnackComponent
+    NewSnackComponent,
+    ConfirmAlertBoxComponent
   ],
 
 })

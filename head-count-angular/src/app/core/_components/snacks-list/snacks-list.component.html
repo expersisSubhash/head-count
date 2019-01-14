@@ -12,26 +12,28 @@
     <div class="table-responsive" *ngIf="snackList && snackList.length > 0">
       <table class="table table-striped text-center">
         <thead class="bg-sky">
-          <tr>
-             <th>Name</th>
-              <th>Price</th>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
 
-             <th style="width: 60px;"></th>
-          </tr>
+          <th style="width: 60px;"></th>
+        </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let obj of snackList;">
-             <td style="text-align: left">{{ obj.name }} </td>
-            <td style="text-align: left">{{ obj.default_price }} </td>
-
-             <td>
-               <span style="margin-left: 5px;"><a (click)="newSnack(obj)"><i class="glyphicon glyphicon-pencil" title="Modify User's details"></i></a></span>
-               <span style="margin-left: 5px;"><a ><i class="glyphicon glyphicon-trash" title="Delete User"></i></a></span>
-             </td>
-          </tr>
+        <tr *ngFor="let obj of snackList;">
+          <td style="text-align: left">{{ obj.name }}</td>
+          <td style="text-align: left">{{ obj.default_price }}</td>
+          <td>
+            <span style="margin-left: 5px;"><a (click)="newSnack(obj)"><i class="glyphicon glyphicon-pencil"
+                                                                          title="Modify Snack details"></i></a></span>
+            <span style="margin-left: 5px;"><a (click)="deleteSnack(obj)"><i class="glyphicon glyphicon-trash" title="Delete Snack"></i></a></span>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
-    <div class="alert alert-success text-center" *ngIf="snackList && snackList.length === 0">There are no snacks to display</div>
+    <div class="alert alert-success text-center" *ngIf="snackList && snackList.length === 0">There are no snacks to
+      display
+    </div>
   </div>
 </div>
