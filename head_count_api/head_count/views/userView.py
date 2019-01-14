@@ -128,3 +128,41 @@ def user_detail(request, pk):
     context_data[constants.RESPONSE_MESSAGE] = msg
     return JsonResponse(context_data, status=200)
 
+
+@api_view(['GET', 'POST', 'DELETE', 'PUT'])
+@permission_classes((AllowAny, ))
+def change_password(request):
+    context_data = dict()
+    try:
+        data = JSONParser().parse(request)
+        # Get the email id
+        email = data['email']
+        try:
+            user = User.objects.get(email=email)
+            error = False
+            msg = 'User found.'
+        except User.DoesNotExist:
+            user = None
+            error = True
+            msg = 'User does not exist.'
+
+        if not error:
+            # Check the password
+            is_valid = user.check_password(data['existing_password'])
+            if is_valid:
+                user.set_password(data['new_password'])
+                msg = 'Password changed successfully'
+                user.save()
+            else:
+                error = True
+                msg = 'The old password is wrong, Please provide the correct old password'
+
+    except Exception as e:
+        error = True
+        msg = "Something went wrong while working on PUD. Error : " + str(e)
+
+    context_data[constants.RESPONSE_ERROR] = error
+    context_data[constants.RESPONSE_MESSAGE] = msg
+    return JsonResponse(context_data, status=200)
+
+

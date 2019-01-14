@@ -19,6 +19,7 @@ import {NewUserComponent} from './_components/new-user/new-user.component';
 import {SidebarService} from './_services/sidebar.service';
 import { SnackDayComponent } from './_components/snack-day/snack-day.component';
 import {ConfirmAlertBoxComponent} from './_components/confirm-alert-box/confirm-alert-box.component';
+import { ChangePasswordComponent } from './_components/change-password/change-password.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import {ConfirmAlertBoxComponent} from './_components/confirm-alert-box/confirm-
     UserListComponent,
     NewUserComponent,
     SnackDayComponent,
-    ConfirmAlertBoxComponent
+    ConfirmAlertBoxComponent,
+    ChangePasswordComponent
   ],
   providers: [
     AuthService,
@@ -51,7 +53,8 @@ import {ConfirmAlertBoxComponent} from './_components/confirm-alert-box/confirm-
   entryComponents: [
     NewUserComponent,
     NewSnackComponent,
-    ConfirmAlertBoxComponent
+    ConfirmAlertBoxComponent,
+    ChangePasswordComponent
   ],
 
 })
