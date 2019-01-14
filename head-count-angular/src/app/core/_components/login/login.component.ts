@@ -3,6 +3,9 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../_services/auth.service';
 import {Router} from '@angular/router';
 import {AlertService} from '../../../shared/_components/alert/alert.service';
+import {NewUserComponent} from '../new-user/new-user.component';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import {ForgotPasswordComponent} from '../forgot-password/forgot-password.component';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +16,14 @@ export class LoginComponent implements OnInit {
 
   loginFG: FormGroup;
   loginError = false;
+  bsModalRef: BsModalRef;
 
   constructor(
     fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private bsModalService: BsModalService
   ) {
     this.loginFG = fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -49,5 +54,10 @@ export class LoginComponent implements OnInit {
         this.loginError = true;
       }
     );
+  }
+
+  show_forgot_password() {
+    this.bsModalRef = this.bsModalService.show(ForgotPasswordComponent, {ignoreBackdropClick: true});
+
   }
 }

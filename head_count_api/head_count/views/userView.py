@@ -17,7 +17,7 @@ from django.http import JsonResponse
 from head_count.models import User
 from head_count.serializers.userSerializer import UserSerializer
 from head_count.helpers.helpers import get_custom_error_list
-from head_count.helpers import constants
+from head_count.helpers import constants, helpers
 
 
 @csrf_exempt
@@ -122,7 +122,7 @@ def user_detail(request, pk):
 
     except Exception as e:
         error = True
-        msg = "Something went wrong while working on PUD. Error : " + str(e)
+        msg = "Something went wrong while working on User. Error : " + str(e)
 
     context_data[constants.RESPONSE_ERROR] = error
     context_data[constants.RESPONSE_MESSAGE] = msg
@@ -159,7 +159,49 @@ def change_password(request):
 
     except Exception as e:
         error = True
-        msg = "Something went wrong while working on PUD. Error : " + str(e)
+        msg = "Something went wrong while changing the password. Error : " + str(e)
+
+    context_data[constants.RESPONSE_ERROR] = error
+    context_data[constants.RESPONSE_MESSAGE] = msg
+    return JsonResponse(context_data, status=200)
+
+
+@api_view(['GET', 'POST', 'DELETE', 'PUT'])
+@authentication_classes([])
+@permission_classes((AllowAny, ))
+def forgot_password(request):
+    context_data = dict()
+    try:
+        data = JSONParser().parse(request)
+        # Get the email id
+        email = data['email']
+        try:
+            user = User.objects.get(email=email)
+            error = False
+            msg = 'User found.'
+        except User.DoesNotExist:
+            user = None
+            error = True
+            msg = email + ' does not exist in our records, Please contact Administrator'
+
+        if not error:
+            # Generate a random password
+            password = helpers.generate_random_password()
+            subject = 'Reset password'
+            # Send the mail with this password
+            to_list = [email]
+            content = "Please use following password to login, Please make sure to reset password after you login " \
+                      "\n" + password
+            sent = helpers.send_email(to_list, content)
+            if sent:
+                user.set_password(password)
+                user.save()
+                msg = """An email with your new password has been sent to the email address you provided, 
+                You should be able to login using the password provided"""
+
+    except Exception as e:
+        error = True
+        msg = "Something went wrong while processing that request. Error : " + str(e)
 
     context_data[constants.RESPONSE_ERROR] = error
     context_data[constants.RESPONSE_MESSAGE] = msg

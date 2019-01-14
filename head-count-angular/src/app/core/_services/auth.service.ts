@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {User} from '../_models/user';
@@ -14,7 +14,8 @@ export class AuthService {
   NORMAL_USER = 2;
   ADMIN_USER = 3;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getToken(): string {
     return localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : '';
@@ -93,5 +94,4 @@ export class AuthService {
   changeUserPassword(formData): Observable<any> {
     return this.http.post('/api/change_password/', formData);
   }
-
 }

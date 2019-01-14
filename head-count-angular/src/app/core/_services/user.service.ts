@@ -38,5 +38,7 @@ export class UserService {
     return this.http.get(`/api/getUser/${id}/`);
   }
 
-
+  forgotPassword(formData): Observable<any> {
+    return this.http.post(`/api/forgot_password/`, formData);
+  }
 }

@@ -23,7 +23,7 @@ export class NewUserComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       id: null,
       first_name: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', Validators.email],
       last_name: ['', Validators.required],
     });
   }
@@ -72,9 +72,9 @@ export class NewUserComponent implements OnInit, OnDestroy {
     }
   }
 
-  // errorMessage(control: string, errorName: string) {
-  //   return this.form.get(control).hasError(errorName) && (this.form.get(control).dirty || this.form.get(control).touched);
-  // }
+  errorMessage(control: string, errorName: string) {
+    return this.form.get(control).hasError(errorName) && (this.form.get(control).dirty || this.form.get(control).touched);
+  }
 
   onClose() {
     this.bsModalRef.hide();
