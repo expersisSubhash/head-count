@@ -136,9 +136,9 @@ STATICFILES_DIRS = [
 ]
 
 # Upload external files and media
-MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'head_count/uploads')
 
-MEDIA_URL = '/uploads/'
+MEDIA_URL = '/head_count/uploads/'
 
 try:
     from head_count_api.local_settings import *

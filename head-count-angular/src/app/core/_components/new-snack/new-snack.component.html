@@ -17,6 +17,18 @@
         <input class="form-control input-sm" formControlName="default_price" appTrimInput="true">
       </div>
     </div>
+    <div class="row" style="margin-top: 10px">
+      <div class="col-sm-12">
+        <label>Upload Snack Image</label>
+        <input type="file" name="image_file" (change)="onFileChange($event)" class="hidden" #image_file_input>
+        <div>
+          <span><a class="btn btn-sm btn-default" (click)="image_file_input.click();">Browse</a></span>
+          <span style="margin-left: 5px;" *ngIf="!form.get('image_name').value"></span>
+          <span style="margin-left: 5px;" *ngIf="form.get('image_name').value">{{ form.get('image_name').value }}</span>
+        </div>
+      </div>
+    </div>
+
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default btn-sm" (click)="onClose()">Cancel</button>

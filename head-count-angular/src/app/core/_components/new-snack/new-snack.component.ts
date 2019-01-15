@@ -14,6 +14,7 @@ export class NewSnackComponent implements OnInit, OnDestroy {
   @Output() submitEvent: EventEmitter<any> = new EventEmitter<any>();
   form: FormGroup;
   alive = true;
+  image_file: null;
 
   constructor(
     private snackService: SnackService,
@@ -25,6 +26,7 @@ export class NewSnackComponent implements OnInit, OnDestroy {
       id: null,
       name: ['', Validators.required],
       default_price: [0.0, Validators.required],
+      image_name: null
     });
   }
 
@@ -39,6 +41,7 @@ export class NewSnackComponent implements OnInit, OnDestroy {
           id: snack.id,
           name: snack.name,
           default_price: snack.default_price,
+          image_name: snack.image_name,
         });
       } else {
         this.alertService.error(response.msg);
@@ -47,9 +50,16 @@ export class NewSnackComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    const data = this.form.getRawValue();
+    const formData = new FormData();
+    formData.append('id', data.id || 0);
+    formData.append('name', data.name);
+    formData.append('default_price', data.default_price);
+    formData.append('image_file', this.image_file);
+
     if (this.form.get('id').value) {
       console.log('inside the edit');
-      this.snackService.editSnack(this.form.getRawValue()).subscribe(response => {
+      this.snackService.editSnack(formData).subscribe(response => {
         if (response.error) {
           this.alertService.error(response.msg);
         } else {
@@ -59,7 +69,7 @@ export class NewSnackComponent implements OnInit, OnDestroy {
         }
       });
     } else {
-      this.snackService.newSnack(this.form.getRawValue()).subscribe(response => {
+      this.snackService.newSnack(formData).subscribe(response => {
         if (response.error) {
           this.alertService.error(response.msg);
         } else {
@@ -77,6 +87,20 @@ export class NewSnackComponent implements OnInit, OnDestroy {
 
   onClose() {
     this.bsModalRef.hide();
+  }
+
+  onFileChange(event) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length) {
+      const file = event.target.files[0];
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.form.patchValue({
+          image_name: file.name
+        });
+        this.image_file = file;
+      };
+    }
   }
 
   ngOnDestroy() {

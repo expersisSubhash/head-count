@@ -23,7 +23,7 @@ export class SnackService {
   }
 
   editSnack(formData): Observable<any> {
-    return this.http.put(`/api/editSnacks/${formData.id}/`, formData);
+    return this.http.post(`/api/editSnacks/`, formData);
   }
 
   removeSnacks(id): Observable<any> {
