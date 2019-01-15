@@ -5,3 +5,9 @@ export class Snack {
   image_name: string;
   image_url: string;
 }
+
+export class TodaysSnack {
+  id: number;
+  snack_name: String;
+  date: Date;
+}

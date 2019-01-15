@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {takeWhile} from 'rxjs/internal/operators';
 import {SnackService} from '../../_services/snack.service';
 import {AlertService} from '../../../shared/_components/alert/alert.service';
+import {TodaysSnack} from '../../_models/snack';
 
 @Component({
   selector: 'app-user-snacks-detail',
@@ -11,9 +12,9 @@ import {AlertService} from '../../../shared/_components/alert/alert.service';
 export class UserSnacksDetailComponent implements OnInit, OnDestroy {
 
   alive = true;
-  todays_snack;
+  todays_snack: TodaysSnack;
   ordered = false;
-  user;
+  user: any;
 
   constructor(
     private snackService: SnackService,
@@ -50,7 +51,7 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
     this.ordered = !this.ordered;
     const param = {};
     param['user_id'] = this.user.id;
-    param['snack_day_id'] = this.todays_snack.id;
+    param['snack_day_id'] = this.todays_snack['id'];
     param['choice'] = this.ordered;
 
     this.snackService.saveUsersSnackChoice(param).pipe(takeWhile(() => this.alive)).subscribe(
