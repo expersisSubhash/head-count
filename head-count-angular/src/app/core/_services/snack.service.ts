@@ -19,7 +19,7 @@ export class SnackService {
   }
 
   newSnack(formData): Observable<any> {
-    return this.http.post<any>('/api/c/', formData);
+    return this.http.post<any>('/api/snacks/', formData);
   }
 
   editSnack(formData): Observable<any> {
