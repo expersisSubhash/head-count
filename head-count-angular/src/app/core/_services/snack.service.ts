@@ -19,7 +19,7 @@ export class SnackService {
   }
 
   newSnack(formData): Observable<any> {
-    return this.http.post<any>('/api/snacks/', formData);
+    return this.http.post<any>('/api/c/', formData);
   }
 
   editSnack(formData): Observable<any> {
@@ -34,5 +34,12 @@ export class SnackService {
     return this.http.get<any>(`/api/getSnack/${id}/`);
   }
 
+  getSnackForToday(user_id): Observable<any> {
+    return this.http.get<any>(`/api/getSnackForToday/${user_id}`);
+  }
 
+  saveUsersSnackChoice(params): Observable<any> {
+    return this.http.post<any>(`/api/saveUserSnackChoice/`, params);
+
+  }
 }

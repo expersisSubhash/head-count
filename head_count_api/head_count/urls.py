@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'^getSnack/(?P<pk>[0-9]+)/$', snackView.snack_detail),
     url(r'^editSnacks/$', snackView.snack_list),
     url(r'^removeSnacks/(?P<pk>[0-9]+)/$', snackView.snack_detail),
+    url(r'^getSnackForToday/(?P<pk>[0-9]+)/$', snackView.get_snack_for_today),
+    url(r'^saveUserSnackChoice/$', snackView.save_user_snack_and_choice),
 
 ]
 

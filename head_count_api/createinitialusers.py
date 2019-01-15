@@ -11,7 +11,7 @@ try:
                                                                            'email': 'manoj.patwardhan@xebrium.com'})
     if created:
         user.set_password('xebrium')
-        user.is_superuser = False
+        user.is_superuser = True
         user.first_name = "Manoj"
         user.last_name = "Patwardhan"
         user.save()
