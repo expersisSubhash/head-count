@@ -14,7 +14,7 @@ urlpatterns = [
 
     url(r'^snacks/$', snackView.snack_list),
     url(r'^getSnack/(?P<pk>[0-9]+)/$', snackView.snack_detail),
-    url(r'^editSnacks/(?P<pk>[0-9]+)/$', snackView.snack_detail),
+    url(r'^editSnacks/$', snackView.snack_list),
     url(r'^removeSnacks/(?P<pk>[0-9]+)/$', snackView.snack_detail),
 
 ]
