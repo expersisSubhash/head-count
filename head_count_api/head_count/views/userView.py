@@ -38,7 +38,8 @@ def login(request):
     token, _ = Token.objects.get_or_create(user=user)
     context_data['token'] = token.key
     context_data['user'] = {'id': user.id, 'email': user.email,
-                            'first_name': user.first_name, 'last_name': user.last_name}
+                            'first_name': user.first_name, 'last_name': user.last_name,
+                            'is_super': user.is_superuser}
     return Response(context_data, status=HTTP_200_OK)
 
 
