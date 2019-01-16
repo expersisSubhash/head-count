@@ -11,3 +11,10 @@ export class TodaysSnack {
   snack_name: String;
   date: Date;
 }
+
+export class SnackDayMapping {
+  id: Number;
+  snack: Snack;
+  actual_price: number;
+  date: Date;
+}

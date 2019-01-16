@@ -13,6 +13,8 @@
       <tbody>
       <tr>
         <td style="text-align: left">{{ todays_snack.snack_name}}</td>
+        <td style="text-align: left">{{ todays_snack.date | date:'EEE dd, MMM yyyy'}}</td>
+
         <td> <label class="switch">
           <input type="checkbox" (click)="toggle_order()" [checked]="ordered">
           <span class="slider round"></span>
