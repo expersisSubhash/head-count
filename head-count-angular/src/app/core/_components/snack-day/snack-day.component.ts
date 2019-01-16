@@ -3,25 +3,37 @@ import {SnackDayMapping} from '../../_models/snack';
 import {takeWhile} from 'rxjs/internal/operators';
 import {SnackService} from '../../_services/snack.service';
 import {AlertService} from '../../../shared/_components/alert/alert.service';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-snack-day',
   templateUrl: './snack-day.component.html',
-  styleUrls: ['./snack-day.component.css']
+  styleUrls: ['./snack-day.component.css'],
+  providers: [DatePipe]
 })
 export class SnackDayComponent implements OnInit, OnDestroy {
 
   alive = true;
   snackDayMapping: Array<SnackDayMapping>;
+  snacksList: Array<any>;
   currentDay: number;
+  form: FormGroup;
 
   constructor(
     private snackService: SnackService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private fb: FormBuilder,
+    private datePipe: DatePipe
   ) {
+    this.form = fb.group({
+      snack_data: this.fb.array([])
+    });
   }
 
   ngOnInit() {
+    // Get all snacks
+    this.getAllSnacks();
     this.snackDayMapping = [];
     // Get the weekday
     const today = new Date();
@@ -46,6 +58,35 @@ export class SnackDayComponent implements OnInit, OnDestroy {
     this.getSnacksForDates(my_list);
   }
 
+  newSnack(data?) {
+    const f = this.fb.group({
+      snack: '',
+      price: 0.0,
+      display_date: '',
+      date: new Date()
+    });
+    if (data) {
+     f.patchValue(data);
+    }
+    return f;
+  }
+
+  get snacks() {
+    return this.form.get('snack_data') as FormArray;
+  }
+
+  getAllSnacks() {
+    this.snackService.getAllSnacks().pipe(takeWhile(() => this.alive)).subscribe(response => {
+      if (response['snack_list']) {
+        this.snacksList = response['snack_list'];
+      }
+    });
+  }
+
+  setPrice(event, obj: any) {
+    const _snack = this.snacksList.find((snack) => snack.id.toString() === event.toString());
+    obj.patchValue({price: _snack ? _snack.default_price : 0.0});
+  }
 
   getSnacksForDates(date_list) {
     this.snackService.getSnackForDates(date_list).pipe(takeWhile(() => this.alive)).subscribe(
@@ -55,14 +96,21 @@ export class SnackDayComponent implements OnInit, OnDestroy {
           const tmp = new SnackDayMapping();
           tmp.date = each_row['date'];
           tmp.snack = each_row['snack'];
-          this.snackDayMapping.push(tmp);
+          this.snacks.push(this.newSnack({
+            snack: tmp.snack.id,
+            date: tmp.date,
+            display_date: this.datePipe.transform(tmp.date, 'EEE dd, MMM yyyy'),
+            price: 0.0
+          }));
         }
-        console.log(this.snackDayMapping);
       },
       error => {
         this.alertService.error(error);
       });
+  }
 
+  onSubmit() {
+    console.log(this.snacks.getRawValue());
   }
 
   ngOnDestroy() {

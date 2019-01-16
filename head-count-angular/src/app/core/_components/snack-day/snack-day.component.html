@@ -6,25 +6,46 @@
 </div>
 <div class="row" style="margin-top: 10px;">
   <div class="col-sm-12 col-md-12 col-lg-12">
-
-    <table>
-      <thead class="bg-sky">
-      <tr>
-        <th> Day and Date</th>
-        <th>Snack</th>
-        <th>Price</th>
-      </tr>
-      </thead>
-    <tbody>
-          <tr *ngFor="let obj of snackDayMapping;">
-             <td style="text-align: left">{{ obj.date | date:'EEE dd, MMM yyyy'}}</td>
-             <td style="text-align: left" *ngIf="obj.snack">{{'      ' + obj.snack.snack_name + '      '}}</td>
-            <td style="text-align: left" *ngIf="!obj.snack">Dropdown with selected values</td>
-            <td style="text-align: left" >
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <table class="table table-bordered">
+        <thead class="bg-sky">
+        <tr>
+          <th> Day and Date</th>
+          <th>Snack</th>
+          <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container formArrayName="snack_data" *ngFor="let obj of snacks.controls;let index=index;">
+          <tr [formGroupName]="index">
+            <td style="text-align: left">{{ obj.get('display_date').value}}</td>
+            <td style="text-align: left">
+              <select class="form-control" [formControlName]="'snack'" (ngModelChange)="setPrice($event, obj)">
+                <option [ngValue]="0">Select Snack</option>
+                <ng-container *ngFor="let snack of snacksList">
+                  <option *ngIf="snack" [ngValue]="snack.id">{{ snack.name }}</option>
+                </ng-container>
+              </select>
             </td>
-
+            <td style="text-align: left">{{ obj.get('price').value }}</td>
           </tr>
+        </ng-container>
         </tbody>
-    </table>
-    </div>
+        <tfoot>
+        <tr>
+          <td colspan="3" class="text-right">
+            <button type="submit" class="btn btn-primary">Save Snacks</button>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
+    </form>
   </div>
+</div>
+
+<!--<tr *ngFor="let obj of snackDayMapping;">-->
+<!--<td style="text-align: left">{{ obj.date | date:'EEE dd, MMM yyyy'}}</td>-->
+<!--<td style="text-align: left" *ngIf="obj.snack">{{'      ' + obj.snack.snack_name + '      '}}</td>-->
+<!--<td style="text-align: left" *ngIf="!obj.snack">Dropdown with selected values</td>-->
+<!--<td style="text-align: left"></td>-->
+<!--</tr>-->
