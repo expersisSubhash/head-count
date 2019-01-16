@@ -5,7 +5,7 @@ import {Subject} from 'rxjs';
   providedIn: 'root'
 })
 export class SidebarService {
-  isShow = false;
+  isShow = true;
   subject = new Subject<boolean>();
 
   $data = this.subject.asObservable();
@@ -13,12 +13,13 @@ export class SidebarService {
   constructor() { }
 
   toggle() {
-    this.isShow = !this.isShow;
+    this.isShow = true;
+    // this.isShow = !this.isShow;
     this.subject.next(this.isShow);
   }
 
   close() {
-    this.isShow = false;
+    this.isShow = true;
     this.subject.next(this.isShow);
   }
 }

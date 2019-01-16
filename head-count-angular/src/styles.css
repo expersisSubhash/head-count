@@ -9,14 +9,52 @@
 
 /* You can add global styles to this file, and also import other style files */
 .bg-sky, .panel-sky > .panel-heading {
-  background-color: #eeeeee;
-  color: #425f9e;
-  font-weight: bold;
+  background-color: #e5746b;
+  /*background-color: #ca5c54;*/
+  color: white;
+  font-weight: lighter;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+.th-header{
+  color: white;
+  font-weight: 300;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+.rw-title{
+  color: #585a5e;
+  font-weight: 500;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+.rw-nav{
+  color: #553fc7;
+  font-weight: 500;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: #fff;
+  /*line-height: 5px;*/
+  text-align: center;
+  vertical-align: center;
+  background: yellow;
+  font-weight: lighter;
+  font-family: 'Helvetica';
 }
 
 body {
-  background: #fff;
+  background: white;
+  /*background: #e5e5e5;*/
+  /*background: #fff;*/
   margin: 70px 0;
+  margin-left: 150px;
+  /*margin-top: 70px 0;*/
+  width: 88%;
   padding: 0;
   color: #000;
   font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -29,7 +67,9 @@ body {
 }
 
 .back {
-  background: rgba(0, 0, 0, .4);
+  /*background: white;*/
+  /*background: #e5e5e5;*/
+  background: white;
 }
 
 a {
@@ -58,4 +98,14 @@ a:hover, a:active, a:focus {
     padding: 20px 0
 }
 
+.table-bg{
+  background-color: white;
+}
 
+.custom-button {
+  /*background-color: #ca5c54;*/
+  color: #e5746b;
+  font-weight: lighter;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+
+}

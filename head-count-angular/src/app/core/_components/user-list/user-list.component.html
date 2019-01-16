@@ -1,29 +1,44 @@
 <div class="row">
-  <div class="col-sm-12 col-md-3 col-lg-3">
+  <div class="col-sm-1 col-md-1 col-lg-1">
   </div>
-  <div class="col-sm-12 col-md-9 col-lg-9">
-    <div class="text-right">
-      <button type="button" class="btn btn-primary btn-sm" (click)="newUser()">New User</button>
+  <div class="col-sm-6 col-md-6 col-lg-6">
+    <label style="text-align: left; margin-left: 5px; font-weight: lighter; font-family: 'Helvetica';
+">XEBRIUM EMPLOYEES</label>
+
+  </div>
+  <div class="col-sm-4 col-md-4 col-lg-4">
+        <div class="text-right">
+      <!--<button type="button" class="btn btn-primary btn-sm" (click)="newUser()">New User</button>-->
+            <span class="button-separator" >
+                    <a title="Add New Employee" (click)="newUser()">
+                  <img src='../../../../assets/images/user.png' style="width: 30px; height: 30px">
+                </a>
+                  </span>
+
     </div>
   </div>
+  <div class="col-sm-1 col-md-1 col-lg-1">
+  </div>
 </div>
-<div class="row" style="margin-top: 10px;">
-  <div class="col-sm-12 col-md-12 col-lg-12">
-    <div class="table-responsive" *ngIf="userList && userList.length > 0">
-      <table class="table table-striped text-center">
-        <thead class="bg-sky">
-          <tr>
-             <th>Employee Name</th>
+
+<div class="row" style="margin-top: 15px;">
+    <div class="col-sm-1 col-md-1 col-lg-1">
+  </div>
+
+  <div class="col-sm-10 col-md-10 col-lg-10">
+    <div class="table-responsive" style="border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" *ngIf="userList && userList.length > 0">
+      <table class="table text-center" style="border-radius: 5px;">
+        <tr class="bg-sky" style="height: 50px">
+             <th class="th-header">EMPLOYEE NAME</th>
              <th style="width: 60px;"></th>
           </tr>
-        </thead>
         <tbody>
-          <tr *ngFor="let obj of userList;">
-             <td style="text-align: left">{{ obj.first_name }} {{ ' ' + obj.last_name }}</td>
+          <tr class="table-bg" *ngFor="let obj of userList;">
+             <td class="rw-title" style="text-align: left">{{ obj.first_name }} {{ ' ' + obj.last_name }}</td>
 
              <td>
-               <span style="margin-left: 5px;"><a (click)="newUser(obj)"><i class="glyphicon glyphicon-pencil" title="Modify User's details"></i></a></span>
-               <span style="margin-left: 5px;"><a (click)="deleteUser(obj)"><i class="glyphicon glyphicon-trash" title="Delete User"></i></a></span>
+               <span style="margin-left: 5px;"><a (click)="newUser(obj)"><i class="glyphicon glyphicon-pencil" title="Modify User's details" style="color: #585a5e"></i></a></span>
+               <span style="margin-left: 5px;"><a (click)="deleteUser(obj)"><i class="glyphicon glyphicon-trash" title="Delete User" style="color: #585a5e"></i></a></span>
              </td>
           </tr>
         </tbody>
@@ -31,4 +46,7 @@
     </div>
     <div class="alert alert-success text-center" *ngIf="userList && userList.length === 0">There are no users added</div>
   </div>
+    <div class="col-sm-1 col-md-1 col-lg-1">
+  </div>
+
 </div>

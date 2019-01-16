@@ -1,37 +1,56 @@
 <div class="row">
-  <div class="col-sm-12 col-md-3 col-lg-3">
+  <div class="col-sm-1 col-md-1 col-lg-1">
   </div>
-  <div class="col-sm-12 col-md-9 col-lg-9">
+  <div class="col-sm-6 col-md-6 col-lg-6">
+    <label style="text-align: left; margin-left: 5px; font-weight: lighter; font-family: 'Helvetica';
+">SNACKS ON THE MENU</label>
+  </div>
+  <div class="col-sm-4 col-md-4 col-lg-4">
     <div class="text-right">
-      <button type="button" class="btn btn-primary btn-sm" (click)="newSnack()">New Snack</button>
+      <!--<button type="button" class="btn btn-primary btn-sm" (click)="newSnack()">New Snack</button>-->
+      <span class="button-separator">
+                    <a title="Add New Snack" (click)="newSnack()">
+                  <img src='../../../../assets/images/cart.png' style="width: 30px; height: 30px">
+                </a>
+                  </span>
     </div>
   </div>
+  <div class="col-sm-1 col-md-1 col-lg-1">
+  </div>
+
 </div>
-<div class="row" style="margin-top: 10px;">
-  <div class="col-sm-12 col-md-12 col-lg-12">
-    <div class="table-responsive" *ngIf="snackList && snackList.length > 0">
-      <table class="table table-striped text-center">
-        <thead class="bg-sky">
-        <tr>
-          <th style="width: 10%">Image</th>
-          <th style="width: 80%">Name</th>
-          <th style="width: 5%; text-align: left">Price</th>
-          <th style="width: 5%;"></th>
+<div class="row" style="margin-top: 15px;">
+  <div class="col-sm-1 col-md-1 col-lg-1">
+  </div>
+  <div class="col-sm-10 col-md-10 col-lg-10">
+    <div class="table-responsive" style="border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
+         *ngIf="snackList && snackList.length > 0">
+      <table class="table text-center" style="border-radius: 5px;">
+        <tr class="bg-sky" style="height: 50px">
+          <th class="th-header" style="width: 10%; text-align: center">SNACKS</th>
+          <th class="th-header" style="width: 70%"></th>
+          <th class="th-header" style="width: 10%; text-align: center">PRICE</th>
+          <th class="th-header" style="width: 10%;"></th>
         </tr>
-        </thead>
         <tbody>
-        <tr *ngFor="let obj of snackList;">
+        <tr class="table-bg" *ngFor="let obj of snackList;">
           <td style="text-align:left; width: 130pt;">
             <img width="90" height="90"
                  src="{{ obj.image_url }}"
                  onerror="this.src='../../../../../assets/images/empty_plate.jpg';">
           </td>
-          <td style="text-align: left">{{ obj.name }}</td>
-          <td style="text-align: left">{{ obj.default_price }}</td>
+          <td class="rw-title" style="text-align: left">{{ obj.name }}</td>
+          <td class="rw-title" style="text-align: center; color:  #e5746b; font-weight: 400; font-size: 20px">
+              {{ '₹ ' + obj.default_price }}
+           </td>
           <td>
             <span style="margin-left: 5px;"><a (click)="newSnack(obj)"><i class="glyphicon glyphicon-pencil"
+                                                                          style="color: #585a5e"
                                                                           title="Modify Snack details"></i></a></span>
-            <span style="margin-left: 5px;"><a (click)="deleteSnack(obj)"><i class="glyphicon glyphicon-trash" title="Delete Snack"></i></a></span>
+            <span style="margin-left: 5px;"><a (click)="deleteSnack(obj)"><i class="glyphicon glyphicon-trash"
+                                                                             style="color: #585a5e"
+                                                                             title="Delete Snack"></i></a></span>
           </td>
         </tr>
         </tbody>
@@ -41,4 +60,7 @@
       display
     </div>
   </div>
+  <div class="col-sm-1 col-md-1 col-lg-1">
+  </div>
+
 </div>

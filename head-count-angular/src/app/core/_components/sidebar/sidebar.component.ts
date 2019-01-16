@@ -11,14 +11,14 @@ import {DOCUMENT} from '@angular/common';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  isShow = false;
+  isShow = true;
   menuList: Array<any> = [
     {
       header: 'Dashboard',
       menus: [
-        {name: 'Snacks', url: '/snacks'},
-        {name: 'Users', url: '/users'},
-        {name: 'Today\'s Snack', url: '/snack-day'}
+        {name: 'SNACKS', url: '/snacks', image: '../../../../../assets/images/menu.png'},
+        {name: 'USERS', url: '/users', image: '../../../../../assets/images/users.png'},
+        {name: 'TODAY\'S SNACK', url: '/snack-day', image: '../../../../../assets/images/dish.png'}
       ],
       role: 'normal'
     },
@@ -53,6 +53,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   close() {
     this.sidebarService.close();
+  }
+
+  routerLinkActive(url) {
+    return this.router.isActive(url, false);
   }
 
   ngOnDestroy() {
