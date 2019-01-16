@@ -196,10 +196,54 @@ def save_user_snack_and_choice(request):
         snack_day_mapping_id = data['snack_day_id']
         choice = data['choice']
 
-        UserSnackDayMapping.objects.create(user_id=user_id,
-                                           users_snack_id=snack_day_mapping_id,
-                                           choice=choice)
-        msg = 'Changes saved successfully'
+        user, created = UserSnackDayMapping.objects.get_or_create(user_id=user_id, defaults={'user_id': user_id,
+                                                                                             'users_snack_id':
+                                                                                                 snack_day_mapping_id})
+        if user:
+            user.choice = choice
+            user.save()
+            msg = 'Changes saved successfully'
+        else:
+            msg = "Something went wrong while saving your choice, Please try again"
+            error = True
+    except Exception as e:
+        msg = "Something went wrong while saving your choice : " + str(e)
+        error = True
+
+    context_data[constants.RESPONSE_ERROR] = error
+    context_data[constants.RESPONSE_MESSAGE] = msg
+    return JsonResponse(context_data, status=200)
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny, ))
+def get_snacks_for_dates(request):
+    context_data = dict()
+    error = False
+    msg = ''
+    try:
+        data = request.data
+        # Walk through this dates and get Snack if any
+        date_snack_list = list()
+        for date in data:
+            date_snack_dict = dict()
+            date_obj = datetime.fromtimestamp(date/1000.0).date()
+
+            snack_for_day_qs = SnackDayMapping.objects.filter(date=date_obj)
+            if snack_for_day_qs and len(snack_for_day_qs) > 0:
+                snack_for_day = snack_for_day_qs[0]
+                # Get the Snack object
+                serializer = SnackDayMappingSerializer(snack_for_day)
+
+                date_snack_dict['date'] = date
+                date_snack_dict['snack'] = serializer.data
+            else:
+                date_snack_dict['date'] = date
+                date_snack_dict['snack'] = {}
+            date_snack_list.append(date_snack_dict)
+
+        context_data['data'] = date_snack_list
+
     except Exception as e:
         msg = "Something went wrong while saving your choice : " + str(e)
         error = True

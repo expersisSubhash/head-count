@@ -1,1 +1,30 @@
-<p>Welcome</p>
+<div class="row">
+  <div class="col-sm-12 col-md-3 col-lg-3">
+  </div>
+  <div class="col-sm-12 col-md-9 col-lg-9">
+  </div>
+</div>
+<div class="row" style="margin-top: 10px;">
+  <div class="col-sm-12 col-md-12 col-lg-12">
+
+    <table>
+      <thead class="bg-sky">
+      <tr>
+        <th> Day and Date</th>
+        <th>Snack</th>
+        <th>Price</th>
+      </tr>
+      </thead>
+    <tbody>
+          <tr *ngFor="let obj of snackDayMapping;">
+             <td style="text-align: left">{{ obj.date | date:'EEE dd, MMM yyyy'}}</td>
+             <td style="text-align: left" *ngIf="obj.snack">{{'      ' + obj.snack.snack_name + '      '}}</td>
+            <td style="text-align: left" *ngIf="!obj.snack">Dropdown with selected values</td>
+            <td style="text-align: left" >
+            </td>
+
+          </tr>
+        </tbody>
+    </table>
+    </div>
+  </div>

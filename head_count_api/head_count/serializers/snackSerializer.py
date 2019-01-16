@@ -13,7 +13,7 @@ class SnackDayMappingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SnackDayMapping
-        fields = ('id', 'snack_name', 'date')
+        fields = ('id', 'snack_name', 'date', 'price_for_day')
 
     @classmethod
     def get_snack_name(cls, obj):

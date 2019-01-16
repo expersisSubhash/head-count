@@ -38,6 +38,9 @@ export class SnackService {
     return this.http.get<any>(`/api/getSnackForToday/${user_id}`);
   }
 
+  getSnackForDates(date_list): Observable<any> {
+    return this.http.post<any>(`/api/getSnackForDates/`, date_list);
+  }
   saveUsersSnackChoice(params): Observable<any> {
     return this.http.post<any>(`/api/saveUserSnackChoice/`, params);
 
