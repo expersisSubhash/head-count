@@ -5,11 +5,11 @@
       <ng-container *ngFor="let menu of item.menus">
         <li [ngClass]="{'active-tab': routerLinkActive(menu.url)}">
           <a class="rw-nav" (click)="openRouterLink(menu.url)">
-            <table class="table text-center">
+            <table class="table text-center" style="margin-bottom: 0;">
             <tr style="align-content: center">
               <img style="height: 30px; width: 30px; margin-bottom: 10px" src="{{menu.image}}">
             </tr>
-          <tr style="align-content: center; font-weight: 400">{{ menu.name }}</tr>
+          <tr style="align-content: center; font-weight: 400;font-size: small;">{{ menu.name }}</tr>
             </table>
           </a>
         </li>

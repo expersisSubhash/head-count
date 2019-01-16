@@ -5,14 +5,14 @@
   </div>
 </div>
 <div class="row" style="margin-top: 10px;">
-  <div class="col-sm-12 col-md-12 col-lg-12">
+  <div class="col-sm-10 col-md-10 col-lg-10 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-      <table class="table table-bordered">
+      <table class="table table-condensed" style="border: 1px solid #dddddd;">
         <thead class="bg-sky">
         <tr>
-          <th> Day and Date</th>
-          <th>Snack</th>
-          <th>Price</th>
+          <th class="th-header">DAY AND DATE</th>
+          <th class="th-header">SNACK</th>
+          <th class="th-header text-center">PRICE (₹)</th>
         </tr>
         </thead>
         <tbody>
@@ -27,7 +27,7 @@
                 </ng-container>
               </select>
             </td>
-            <td style="text-align: left">{{ obj.get('price').value }}</td>
+            <td class="text-center">{{ obj.get('price').value }}</td>
           </tr>
         </ng-container>
         </tbody>

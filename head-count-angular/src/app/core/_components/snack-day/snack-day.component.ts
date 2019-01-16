@@ -96,11 +96,12 @@ export class SnackDayComponent implements OnInit, OnDestroy {
           const tmp = new SnackDayMapping();
           tmp.date = each_row['date'];
           tmp.snack = each_row['snack'];
+          const snack_id = tmp.snack.id ? tmp.snack.id : 0;
           this.snacks.push(this.newSnack({
-            snack: tmp.snack.id,
+            snack: snack_id,
             date: tmp.date,
             display_date: this.datePipe.transform(tmp.date, 'EEE dd, MMM yyyy'),
-            price: 0.0
+            price: 0
           }));
         }
       },
