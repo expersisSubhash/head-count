@@ -9,14 +9,14 @@
         <tr class="bg-sky" style="height: 40px">
           <th class="text-center">
             <span class="th-header text-center" style="font-size: 18px; text-transform: uppercase">WE HAVE</span>
-            <span *ngIf="snack_info.name" class="th-header text-center" style="font-size: 18px; text-transform: uppercase; font-weight: bold">{{
+            <span *ngIf="snack_info" class="th-header text-center" style="font-size: 18px; text-transform: uppercase; font-weight: bold">{{
               ' ' + snack_info.name + ' '}}</span>
             <span class="th-header text-center" style="font-size: 18px; text-transform: uppercase">ON THE MENU
               TODAY!</span>
           </th>
         </tr>
         <tbody>
-        <tr>
+        <tr *ngIf="snack_info">
           <td style="border: none;">
             <img style="width: 300px; height: 300px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" src="{{ snack_info.image_url }}"
                  onerror="this.src='../../../../assets/images/empty_plate.jpg';"></td>
