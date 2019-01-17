@@ -84,7 +84,7 @@ def snack_list(request):
                                 protocol = "https://"
 
                             url = protocol + server_add + ':' + server_port
-                            image_url = url + '/head_count/uploads/snacks_image/%d/image_thumbnail_%d.jpg' % (
+                            image_url = url + '/head_count/uploads/snacks_image/%d/image_original_%d.jpg' % (
                                 snack_obj.id, snack_obj.id)
                             snack_obj.image_url = image_url
 
@@ -166,6 +166,10 @@ def get_snack_for_today(request, pk):
         # Serialize here
         serializer = SnackDayMappingSerializer(snack_day_obj)
         context_data['snack'] = serializer.data
+        # Get snack from snack_day obj
+        snack = snack_day_obj.snack_for_day
+        snack_serializer = SnackSerializer(snack)
+        context_data['snack_info'] = snack_serializer.data
         # Check if we have this snack and users entry in the UserSnackDayMapping
         user_snack_mapping_list = UserSnackDayMapping.objects.filter(user_id=pk,
                                                                      users_snack=snack_day_obj)
