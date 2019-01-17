@@ -163,19 +163,20 @@ def get_snack_for_today(request, pk):
     try:
         # Get today's date
         snack_day_obj = get_todays_snack()
-        # Serialize here
-        serializer = SnackDayMappingSerializer(snack_day_obj)
-        context_data['snack'] = serializer.data
-        # Get snack from snack_day obj
-        snack = snack_day_obj.snack_for_day
-        snack_serializer = SnackSerializer(snack)
-        context_data['snack_info'] = snack_serializer.data
-        # Check if we have this snack and users entry in the UserSnackDayMapping
-        user_snack_mapping_list = UserSnackDayMapping.objects.filter(user_id=pk,
-                                                                     users_snack=snack_day_obj)
-        if len(user_snack_mapping_list) > 0:
-            user_snack_mapping_obj = user_snack_mapping_list[0]
-            context_data['choice'] = user_snack_mapping_obj.choice
+        if snack_day_obj:
+            # Serialize here
+            serializer = SnackDayMappingSerializer(snack_day_obj)
+            context_data['snack'] = serializer.data
+            # Get snack from snack_day obj
+            snack = snack_day_obj.snack_for_day
+            snack_serializer = SnackSerializer(snack)
+            context_data['snack_info'] = snack_serializer.data
+            # Check if we have this snack and users entry in the UserSnackDayMapping
+            user_snack_mapping_list = UserSnackDayMapping.objects.filter(user_id=pk,
+                                                                         users_snack=snack_day_obj)
+            if len(user_snack_mapping_list) > 0:
+                user_snack_mapping_obj = user_snack_mapping_list[0]
+                context_data['choice'] = user_snack_mapping_obj.choice
     except Exception as e:
         msg = "Something went wrong while getting today's Snack. Message : " + str(e)
         error = True
@@ -283,13 +284,13 @@ def save_snacks_for_dates(request):
                         obj.price_for_day = tmp['price']
                         obj.save()
                     else:
+                        notify_cancellation(today, obj)
                         obj.delete()
                 else:
                     if 'snack' in tmp and tmp['snack']:
                         SnackDayMapping.objects.create(snack_for_day_id=tmp['snack'],
                                                        date=datetime.fromtimestamp(tmp['date']/1000.0).date(),
                                                        price_for_day=tmp['price'])
-
 
             except SnackDayMapping.DoesNotExist as e:
                 msg = 'Exception occured while updating the Snacks, Please contact System Admin' + str(e)
@@ -315,18 +316,29 @@ def save_snacks_for_dates(request):
 
 # Get all the user who had marked either yes/no for today's snack
 def notify_change():
-    # Get todays snack
+    # Get today's snack
     snack_day = get_todays_snack()
-    # Get all the user
-    user_list = UserSnackDayMapping.objects.filter(users_snack=snack_day).values_list('user__email', flat=True)
-    subject = 'Welcome'
-    # Send the mail with this password
-    to_list = user_list
-    content = "There is a change in Snack that was scheduled for Today, Please visit the site and update " \
-              "your choice, The new snack is" + snack_day.snack_for_day.name
-    sent = helpers.send_email(to_list, content)
-    if sent:
-        print('Email sent successfully')
+    if snack_day:
+        to_list = get_user_emails_for_snack_day(snack_day)
+        # Send the mail with this password
+        content = "There is a change in Snack that was scheduled for Today, Please visit the site and update " \
+                  "your choice, The new snack is" + snack_day.snack_for_day.name
+        sent = helpers.send_email(to_list, content)
+        if sent:
+            print('Email sent successfully')
+
+
+def notify_cancellation(today, obj):
+    if obj.date == today:
+        if obj:
+            to_list = get_user_emails_for_snack_day(obj)
+            # Send the mail with this password
+            content = "Today's snack has been canceled, Please contact HR for more information"
+            sent = helpers.send_email(to_list, content)
+            if sent:
+                print('Email sent successfully')
+    else:
+        pass
 
 
 def get_todays_snack():
@@ -337,6 +349,11 @@ def get_todays_snack():
     if len(snack_day_mapping_list) > 0:
         snack_day_obj = snack_day_mapping_list[0]
     return snack_day_obj
+
+
+def get_user_emails_for_snack_day(snack_day):
+    return UserSnackDayMapping.objects.filter(users_snack=snack_day).values_list('user__email', flat=True)
+
 
 
 
