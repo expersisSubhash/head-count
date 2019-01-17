@@ -18,11 +18,14 @@
         <tbody>
         <tr *ngIf="snack_info">
           <td style="border: none;">
-            <img style="width: 300px; height: 300px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" src="{{ snack_info.image_url }}"
-                 onerror="this.src='../../../../assets/images/empty_plate.jpg';"></td>
+            <div style="max-width:300px;max-height: 300px;margin: auto;">
+            <img class="img-responsive" style="border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" src="{{ snack_info.image_url }}"
+                 onerror="this.src='../../../../assets/images/empty_plate.jpg';">
+            </div>
+          </td>
         </tr>
         <tr>
-          <td style="border: none;">
+          <td style="border: none;line-height: 2;">
             <label class="th-header" style="color: black; vertical-align: center">PLACE YOUR ORDER</label>
             <label style="margin-left: 10px" class="switch">
               <input type="checkbox" (click)="toggle_order()" [checked]="ordered">
