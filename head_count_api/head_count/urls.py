@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^saveUserSnackChoice/$', snackView.save_user_snack_and_choice),
     url(r'^getSnackForDates/$', snackView.get_snacks_for_dates),
     url(r'^createSnackDayMapping/$', snackView.save_snacks_for_dates),
+    url(r'^getInterestedUsersCount/$', snackView.get_interested_users_count),
 
 ]
 

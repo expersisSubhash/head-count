@@ -5,7 +5,8 @@ from django.http import JsonResponse
 import datetime
 from datetime import datetime, timezone
 from head_count.models import Snack, SnackDayMapping, UserSnackDayMapping
-from head_count.serializers.snackSerializer import SnackSerializer, SnackDayMappingSerializer
+from head_count.serializers.snackSerializer import (SnackSerializer, SnackDayMappingSerializer,
+                                                    UserSnackMappingSerializer)
 from head_count.helpers.helpers import get_custom_error_list
 from head_count.helpers import constants, helpers
 from PIL import Image
@@ -161,6 +162,7 @@ def get_snack_for_today(request, pk):
     msg = ''
     error = False
     try:
+        print(request.data)
         # Get today's date
         snack_day_obj = get_todays_snack()
         if snack_day_obj:
@@ -314,6 +316,32 @@ def save_snacks_for_dates(request):
     return JsonResponse(context_data, status=200)
 
 
+@api_view(['GET'])
+@permission_classes((AllowAny, ))
+def get_interested_users_count(request):
+    context_data = dict()
+    error = False
+    msg = ''
+    cnt = 0
+    try:
+        print(request.data)
+        # Get all the UserSnackDayMapping obj for today
+        snack = get_todays_snack()
+        if snack:
+            queryset = UserSnackDayMapping.objects.filter(users_snack=snack)
+            serializer = UserSnackMappingSerializer(queryset, many=True)
+            context_data['user_list'] = serializer.data
+            context_data['user_count'] = queryset.filter(choice=True).count()
+
+    except Exception as e:
+        msg = "Something went wrong while saving your choice : " + str(e)
+        error = True
+
+    context_data[constants.RESPONSE_ERROR] = error
+    context_data[constants.RESPONSE_MESSAGE] = msg
+    return JsonResponse(context_data, status=200)
+
+
 # Get all the user who had marked either yes/no for today's snack
 def notify_change():
     # Get today's snack
@@ -353,7 +381,3 @@ def get_todays_snack():
 
 def get_user_emails_for_snack_day(snack_day):
     return UserSnackDayMapping.objects.filter(users_snack=snack_day).values_list('user__email', flat=True)
-
-
-
-

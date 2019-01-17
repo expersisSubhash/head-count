@@ -33,6 +33,15 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
     }
   }
 
+  getInterestedUserCount() {
+    this.snackService.getInterestedUsersCount().pipe(takeWhile(() => this.alive)).subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+      });
+  }
+
   getSnackForToday() {
     this.snackService.getSnackForToday(this.user.id).pipe(takeWhile(() => this.alive)).subscribe(
       data => {

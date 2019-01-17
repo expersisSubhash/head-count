@@ -41,12 +41,17 @@ export class SnackService {
   getSnackForDates(date_list): Observable<any> {
     return this.http.post<any>(`/api/getSnackForDates/`, date_list);
   }
+
   saveUsersSnackChoice(params): Observable<any> {
     return this.http.post<any>(`/api/saveUserSnackChoice/`, params);
 
   }
-  createSnackDayMapping(obj_list): Observable<any> {
-        return this.http.post<any>(`/api/createSnackDayMapping/`, obj_list);
 
+  createSnackDayMapping(obj_list): Observable<any> {
+    return this.http.post<any>(`/api/createSnackDayMapping/`, obj_list);
+  }
+
+  getInterestedUsersCount(): Observable<any> {
+    return this.http.get<any>(`/api/getInterestedUsersCount/`);
   }
 }

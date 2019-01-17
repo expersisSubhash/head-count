@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from head_count.models import Snack, SnackDayMapping
+from head_count.models import Snack, SnackDayMapping, UserSnackDayMapping
 
 
 class SnackSerializer(serializers.ModelSerializer):
@@ -29,3 +29,18 @@ class SnackDayMappingSerializer(serializers.ModelSerializer):
         if obj.snack_for_day:
             snack_id = obj.snack_for_day.id
         return snack_id
+
+
+class UserSnackMappingSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = UserSnackDayMapping
+        fields = ('id', 'name', 'choice')
+
+    @classmethod
+    def get_name(cls, obj):
+        name = ''
+        if obj.user:
+            name = obj.user.first_name + ' ' + obj.user.last_name
+        return name
