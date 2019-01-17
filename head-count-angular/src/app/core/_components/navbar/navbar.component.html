@@ -23,18 +23,13 @@
 
 <nav class="navbar navbar-default navbar-fixed-top navc">
   <div class="container-fluid">
-    <div *ngIf="user.is_super">
     <div class="l">
       <!--<a (click)="toggleSidebar()"><span class="fa fa-bars"></span></a>-->
       <span class="t-brand"><a (click)="openRouterLink('/')">{{ projectTitle }}</a></span>
     </div>
-    </div>
     <div class="r nav-bal">
       <div class="nav-time">
-      <span>{{ now | date: 'h:mm a' }}</span>
-      <span style="padding-left: 10px"><a (click)="logout()">Logout</a></span>
-        <span style="padding-left: 10px"><a (click)="Change_password()">Change Password</a></span>
-
+      <span>{{ now | date: 'EEE dd, MMM h:mm a' }}</span>
       </div>
 
     </div>

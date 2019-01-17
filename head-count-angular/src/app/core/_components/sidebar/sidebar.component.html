@@ -3,17 +3,58 @@
     <ng-template ngFor let-item [ngForOf]="menuList" let-i="index">
       <!--<li class="link-header"><a>{{ item.header }}</a></li>-->
       <ng-container *ngFor="let menu of item.menus">
-        <li [ngClass]="{'active-tab': routerLinkActive(menu.url)}">
-          <a class="rw-nav" (click)="openRouterLink(menu.url)">
-            <table class="table text-center" style="margin-bottom: 0;">
-            <tr style="align-content: center">
-              <img style="height: 30px; width: 30px; margin-bottom: 10px" src="{{menu.image}}">
-            </tr>
-          <tr style="align-content: center; font-weight: 400;font-size: small;">{{ menu.name }}</tr>
-            </table>
-          </a>
-        </li>
-        <li><hr style="margin: 0;"></li>
+
+        <ng-container *ngIf="(menu.action == 0) && (hasPermission() || !menu.is_super_user)">
+          <li [ngClass]="{'active-tab': routerLinkActive(menu.url)}">
+            <a class="rw-nav" (click)="openRouterLink(menu.url)">
+              <table class="table text-center" style="margin-bottom: 0;">
+                <tr style="align-content: center">
+                  <img style="height: 30px; width: 30px; margin-bottom: 10px" src="{{menu.image}}">
+                </tr>
+                <tr style="align-content: center; font-weight: 400;font-size: small;">{{ menu.name }}</tr>
+              </table>
+            </a>
+          </li>
+          <li>
+            <hr style="margin: 0;">
+          </li>
+        </ng-container>
+
+        <ng-container *ngIf="menu.action === 1">
+          <li>
+            <a class="rw-nav" (click)="logout()">
+              <table class="table text-center" style="margin-bottom: 0;">
+                <tr style="align-content: center">
+                  <img style="height: 30px; width: 30px; margin-bottom: 10px" src="{{menu.image}}">
+                </tr>
+                <tr style="align-content: center; font-weight: 400;font-size: small;">{{ menu.name }}</tr>
+              </table>
+            </a>
+          </li>
+          <li>
+            <hr style="margin: 0;">
+          </li>
+
+        </ng-container>
+
+        <ng-container *ngIf="menu.action === 2">
+
+          <li>
+            <a class="rw-nav" (click)="changePassword()">
+              <table class="table text-center" style="margin-bottom: 0;">
+                <tr style="align-content: center">
+                  <img style="height: 30px; width: 30px; margin-bottom: 10px" src="{{menu.image}}">
+                </tr>
+                <tr style="align-content: center; font-weight: 400;font-size: small;">{{ menu.name }}</tr>
+              </table>
+            </a>
+          </li>
+          <li>
+            <hr style="margin: 0;">
+          </li>
+
+        </ng-container>
+
       </ng-container>
     </ng-template>
   </ul>
