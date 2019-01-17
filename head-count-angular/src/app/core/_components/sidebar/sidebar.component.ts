@@ -24,7 +24,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
         {name: 'SNACK CALENDER', url: '/snack-day', image: '../../../../../assets/images/calender.png', action: 0, is_super_user: 1},
         {name: 'SNACKS', url: '/snacks', image: '../../../../../assets/images/menu.png', action: 0, is_super_user: 1},
         {name: 'USERS', url: '/users', image: '../../../../../assets/images/users.png', action: 0, is_super_user: 1},
-        {name: 'SETTINGS', url: '/users', image: '../../../../../assets/images/settings.png', action: 0, is_super_user: 1},
+        {name: 'REPORTS', url: '/users', image: '../../../../../assets/images/analysis.png', action: 0, is_super_user: 1},
         {name: 'CHANGE PASSWORD', url: '', image: '../../../../../assets/images/padlock.png', action: 2, is_super_user: 0},
         {name: 'LOGOUT', url: '', image: '../../../../../assets/images/logout.png', action: 1, is_super_user: 0},
       ],
