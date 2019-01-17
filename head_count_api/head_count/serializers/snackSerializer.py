@@ -10,10 +10,11 @@ class SnackSerializer(serializers.ModelSerializer):
 
 class SnackDayMappingSerializer(serializers.ModelSerializer):
     snack_name = serializers.SerializerMethodField()
+    snack_id = serializers.SerializerMethodField()
 
     class Meta:
         model = SnackDayMapping
-        fields = ('id', 'snack_name', 'date', 'price_for_day')
+        fields = ('id', 'snack_id', 'snack_name', 'date', 'price_for_day')
 
     @classmethod
     def get_snack_name(cls, obj):
@@ -21,3 +22,10 @@ class SnackDayMappingSerializer(serializers.ModelSerializer):
         if obj.snack_for_day:
             name = obj.snack_for_day.name
         return name
+
+    @classmethod
+    def get_snack_id(cls, obj):
+        snack_id = -1
+        if obj.snack_for_day:
+            snack_id = obj.snack_for_day.id
+        return snack_id

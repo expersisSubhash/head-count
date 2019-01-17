@@ -45,4 +45,8 @@ export class SnackService {
     return this.http.post<any>(`/api/saveUserSnackChoice/`, params);
 
   }
+  createSnackDayMapping(obj_list): Observable<any> {
+        return this.http.post<any>(`/api/createSnackDayMapping/`, obj_list);
+
+  }
 }

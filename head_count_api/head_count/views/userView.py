@@ -59,12 +59,23 @@ def user_list(request):
             # Get email from data
             email = data['email']
             data['username'] = email
+            # Auto generate the password
+            password = helpers.generate_random_password()
             # Default password
-            data['password'] = 'png'
+            data['password'] = password
             serializer = UserSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
                 msg = 'New User created.'
+                # Send an email to user
+                subject = 'Welcome'
+                # Send the mail with this password
+                to_list = [email]
+                content = subject + " Please use following password to login, Please make sure to reset password " \
+                                    "after you login \n" + password
+                sent = helpers.send_email(to_list, content)
+                if sent:
+                    print('Email with password sent successfully')
             else:
                 error = True
                 msg = ', '.join(get_custom_error_list(serializer.errors))
@@ -191,8 +202,8 @@ def forgot_password(request):
             subject = 'Reset password'
             # Send the mail with this password
             to_list = [email]
-            content = "Please use following password to login, Please make sure to reset password after you login " \
-                      "\n" + password
+            content = subject + " Please use following password to login, Please make sure to reset password after you " \
+                                "login \n" + password
             sent = helpers.send_email(to_list, content)
             if sent:
                 user.set_password(password)

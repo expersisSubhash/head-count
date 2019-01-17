@@ -48,7 +48,6 @@ export class SnackDayComponent implements OnInit, OnDestroy {
     const my_list = [];
     let cnt = 0;
     while (cnt < 5) {
-      console.log('Today is ' + today);
       const my_date = today;
       my_list.push(today.getTime());
       today.setDate(today.getDate() + 1);
@@ -63,11 +62,17 @@ export class SnackDayComponent implements OnInit, OnDestroy {
       snack: '',
       price: 0.0,
       display_date: '',
-      date: new Date()
+      date: new Date(),
+      snack_day_mapping_id: 0,
     });
     if (data) {
-     f.patchValue(data);
+      f.patchValue(data);
+      const my_date = new Date(data['date']);
+      if (my_date.getDate() < (new Date().getDate())) {
+        f.disable();
+      }
     }
+
     return f;
   }
 
@@ -92,16 +97,22 @@ export class SnackDayComponent implements OnInit, OnDestroy {
     this.snackService.getSnackForDates(date_list).pipe(takeWhile(() => this.alive)).subscribe(
       data => {
         data = (data['data']);
+        console.log(data);
         for (const each_row of data) {
           const tmp = new SnackDayMapping();
           tmp.date = each_row['date'];
-          tmp.snack = each_row['snack'];
-          const snack_id = tmp.snack.id ? tmp.snack.id : 0;
+          console.log(each_row);
+          // Get snack here
+          const snack = each_row['snack'];
+          tmp.snack_name = snack['snack_name'];
+          tmp.price_for_day = snack['price_for_day'];
+          const snack_id = snack['snack_id'] ? snack['snack_id'] : 0;
           this.snacks.push(this.newSnack({
             snack: snack_id,
             date: tmp.date,
             display_date: this.datePipe.transform(tmp.date, 'EEE dd, MMM yyyy'),
-            price: 0
+            price: tmp.price_for_day ? tmp.price_for_day : 0.0,
+            snack_day_mapping_id: snack['id'] ? snack['id'] : 0
           }));
         }
       },
@@ -112,6 +123,13 @@ export class SnackDayComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     console.log(this.snacks.getRawValue());
+    this.snackService.createSnackDayMapping(this.snacks.getRawValue()).pipe(takeWhile(() => this.alive)).subscribe(
+      data => {
+        this.alertService.success(data['msg']);
+      },
+      error => {
+        this.alertService.error(error);
+      });
   }
 
   ngOnDestroy() {

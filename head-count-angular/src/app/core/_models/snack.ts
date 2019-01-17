@@ -13,7 +13,9 @@ export class TodaysSnack {
 }
 
 export class SnackDayMapping {
-  id: Number;
-  snack: TodaysSnack;
+  id: number;
+  snack_name: string;
+  snack_id: number;
   date: Date;
+  price_for_day: number;
 }

@@ -253,4 +253,50 @@ def get_snacks_for_dates(request):
     return JsonResponse(context_data, status=200)
 
 
+@api_view(['POST'])
+@permission_classes((AllowAny, ))
+def save_snacks_for_dates(request):
+    context_data = dict()
+    error = False
+    msg = ''
+    try:
+        data = request.data
+        # Walk through this dates and get Snack if any
+        date_snack_list = list()
+        for tmp in data:
+            try:
+                # Update
+                if 'snack_day_mapping_id' in tmp and tmp['snack_day_mapping_id']:
+                    obj = SnackDayMapping.objects.get(id=tmp['snack_day_mapping_id'])
+
+                    if 'snack' in tmp and tmp['snack']:
+                        # Get the object with snack_day_mapping_id
+                        obj.snack_for_day_id = tmp['snack']
+                        obj.date = datetime.fromtimestamp(tmp['date']/1000.0).date()
+                        obj.price_for_day = tmp['price']
+                        obj.save()
+                    else:
+                        obj.delete()
+                else:
+                    if 'snack' in tmp and tmp['snack']:
+                        SnackDayMapping.objects.create(snack_for_day_id=tmp['snack'],
+                                                       date=datetime.fromtimestamp(tmp['date']/1000.0).date(),
+                                                       price_for_day=tmp['price'])
+            except SnackDayMapping.DoesNotExist as e:
+                msg = 'Exception occured while updating the Snacks, Please contact System Admin' + str(e)
+                error = True
+            except Exception as e:
+                msg = 'Exception occured while updating the Snacks, Please contact System Admin' + str(e)
+                error = True
+
+        if not error:
+            msg = 'Changes saved successfully'
+
+    except Exception as e:
+        msg = "Something went wrong while saving your choice : " + str(e)
+        error = True
+
+    context_data[constants.RESPONSE_ERROR] = error
+    context_data[constants.RESPONSE_MESSAGE] = msg
+    return JsonResponse(context_data, status=200)
 
