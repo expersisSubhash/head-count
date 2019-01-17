@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from head_count.models import Snack, SnackDayMapping, UserSnackDayMapping
 from head_count.serializers.snackSerializer import SnackSerializer, SnackDayMappingSerializer
 from head_count.helpers.helpers import get_custom_error_list
-from head_count.helpers import constants
+from head_count.helpers import constants, helpers
 from PIL import Image
 from django.db import transaction
 import os
@@ -162,19 +162,16 @@ def get_snack_for_today(request, pk):
     error = False
     try:
         # Get today's date
-        dt = datetime.now(timezone.utc).date()  # UTC time
-        snack_day_mapping_list = SnackDayMapping.objects.filter(date=dt)
-        if len(snack_day_mapping_list) > 0:
-            snack_day_obj = snack_day_mapping_list[0]
-            # Serialize here
-            serializer = SnackDayMappingSerializer(snack_day_obj)
-            context_data['snack'] = serializer.data
-            # Check if we have this snack and users entry in the UserSnackDayMapping
-            user_snack_mapping_list = UserSnackDayMapping.objects.filter(user_id=pk,
-                                                                         users_snack=snack_day_obj)
-            if len(user_snack_mapping_list) > 0:
-                user_snack_mapping_obj = user_snack_mapping_list[0]
-                context_data['choice'] = user_snack_mapping_obj.choice
+        snack_day_obj = get_todays_snack()
+        # Serialize here
+        serializer = SnackDayMappingSerializer(snack_day_obj)
+        context_data['snack'] = serializer.data
+        # Check if we have this snack and users entry in the UserSnackDayMapping
+        user_snack_mapping_list = UserSnackDayMapping.objects.filter(user_id=pk,
+                                                                     users_snack=snack_day_obj)
+        if len(user_snack_mapping_list) > 0:
+            user_snack_mapping_obj = user_snack_mapping_list[0]
+            context_data['choice'] = user_snack_mapping_obj.choice
     except Exception as e:
         msg = "Something went wrong while getting today's Snack. Message : " + str(e)
         error = True
@@ -261,9 +258,16 @@ def save_snacks_for_dates(request):
     msg = ''
     try:
         data = request.data
+        is_todays_snack_updated = False
+        today = datetime.now(timezone.utc).date()  # UTC time
         # Walk through this dates and get Snack if any
         for tmp in data:
             try:
+                if 'date' in tmp:
+                    date = datetime.fromtimestamp(tmp['date']/1000.0).date()
+                    if date == today:
+                        is_todays_snack_updated = True
+
                 # Update
                 if 'snack_day_mapping_id' in tmp and tmp['snack_day_mapping_id']:
                     obj = SnackDayMapping.objects.get(id=tmp['snack_day_mapping_id'])
@@ -281,6 +285,8 @@ def save_snacks_for_dates(request):
                         SnackDayMapping.objects.create(snack_for_day_id=tmp['snack'],
                                                        date=datetime.fromtimestamp(tmp['date']/1000.0).date(),
                                                        price_for_day=tmp['price'])
+
+
             except SnackDayMapping.DoesNotExist as e:
                 msg = 'Exception occured while updating the Snacks, Please contact System Admin' + str(e)
                 error = True
@@ -291,6 +297,9 @@ def save_snacks_for_dates(request):
         if not error:
             msg = 'Changes saved successfully'
 
+        if is_todays_snack_updated:
+            notify_change()
+
     except Exception as e:
         msg = "Something went wrong while saving your choice : " + str(e)
         error = True
@@ -298,4 +307,32 @@ def save_snacks_for_dates(request):
     context_data[constants.RESPONSE_ERROR] = error
     context_data[constants.RESPONSE_MESSAGE] = msg
     return JsonResponse(context_data, status=200)
+
+
+# Get all the user who had marked either yes/no for today's snack
+def notify_change():
+    # Get todays snack
+    snack_day = get_todays_snack()
+    # Get all the user
+    user_list = UserSnackDayMapping.objects.filter(users_snack=snack_day).values_list('user__email', flat=True)
+    subject = 'Welcome'
+    # Send the mail with this password
+    to_list = user_list
+    content = "There is a change in Snack that was scheduled for Today, Please visit the site and update " \
+              "your choice, The new snack is" + snack_day.snack_for_day.name
+    sent = helpers.send_email(to_list, content)
+    if sent:
+        print('Email sent successfully')
+
+
+def get_todays_snack():
+    snack_day_obj = None
+    # Get today's date
+    dt = datetime.now(timezone.utc).date()  # UTC time
+    snack_day_mapping_list = SnackDayMapping.objects.filter(date=dt)
+    if len(snack_day_mapping_list) > 0:
+        snack_day_obj = snack_day_mapping_list[0]
+    return snack_day_obj
+
+
 
