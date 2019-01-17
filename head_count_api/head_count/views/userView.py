@@ -63,7 +63,7 @@ def user_list(request):
             password = helpers.generate_random_password()
             # Default password
             data['password'] = password
-            serializer = UserSerializer(data=data)
+            serializer = UserSerializer(data=data, context={'pwd': password})
             if serializer.is_valid():
                 serializer.save()
                 msg = 'New User created.'

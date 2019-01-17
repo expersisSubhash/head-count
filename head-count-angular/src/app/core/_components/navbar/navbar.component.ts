@@ -29,7 +29,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.user = this.authService.getUserInfo();
-    console.log(this.user);
     this.projectTitle = 'Xebrium';
     setInterval(() => {
       this.now = new Date();

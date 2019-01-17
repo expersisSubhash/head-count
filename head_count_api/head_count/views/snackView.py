@@ -262,7 +262,6 @@ def save_snacks_for_dates(request):
     try:
         data = request.data
         # Walk through this dates and get Snack if any
-        date_snack_list = list()
         for tmp in data:
             try:
                 # Update

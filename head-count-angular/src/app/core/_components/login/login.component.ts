@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../_services/auth.service';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {AlertService} from '../../../shared/_components/alert/alert.service';
 import {NewUserComponent} from '../new-user/new-user.component';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {ForgotPasswordComponent} from '../forgot-password/forgot-password.component';
+import {filter} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-login',
@@ -17,13 +18,14 @@ export class LoginComponent implements OnInit {
   loginFG: FormGroup;
   loginError = false;
   bsModalRef: BsModalRef;
+  history = [];
 
   constructor(
     fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
     private alertService: AlertService,
-    private bsModalService: BsModalService
+    private bsModalService: BsModalService,
   ) {
     this.loginFG = fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -32,7 +34,17 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.logout();
+    if (localStorage.getItem('user')) {
+      this.router.navigate([this.authService.redirectUrl || `/snack-detail`]);
+    }
+  }
+
+  public loadRouting(): void {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(({urlAfterRedirects}: NavigationEnd) => {
+        this.history = [...this.history, urlAfterRedirects];
+      });
   }
 
   errorMessage(control: string, errorName: string) {
