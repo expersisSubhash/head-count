@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {takeWhile} from 'rxjs/internal/operators';
 import {SnackService} from '../../_services/snack.service';
 import {AlertService} from '../../../shared/_components/alert/alert.service';
-import {TodaysSnack} from '../../_models/snack';
+import {Snack, TodaysSnack} from '../../_models/snack';
 
 @Component({
   selector: 'app-user-snacks-detail',
@@ -13,8 +13,11 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
 
   alive = true;
   todays_snack: TodaysSnack;
+  snack_info: Snack;
   ordered = false;
   user: any;
+  userList: any;
+  totalCount: 0;
 
   constructor(
     private snackService: SnackService,
@@ -31,12 +34,17 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
     } else {
       this.alertService.error('Please login');
     }
+    if ( this.user.is_super) {
+      this.getInterestedUserCount();
+    }
   }
 
   getInterestedUserCount() {
     this.snackService.getInterestedUsersCount().pipe(takeWhile(() => this.alive)).subscribe(
       data => {
         console.log(data);
+        this.userList = data['user_list'];
+        this.totalCount = data['user_count'];
       },
       error => {
       });
@@ -46,7 +54,8 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
     this.snackService.getSnackForToday(this.user.id).pipe(takeWhile(() => this.alive)).subscribe(
       data => {
         console.log(data);
-        this.todays_snack = data['snack'];
+        this.todays_snack =  data['snack'];
+        this.snack_info =  data['snack_info'];
         this.ordered = data['choice'];
       },
       error => {

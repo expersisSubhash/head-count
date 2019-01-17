@@ -1,31 +1,94 @@
-<div class="row">
-  <div class="col-sm-12 col-md-3 col-lg-3">
+<div class="row" style="margin-top: 15px;">
+  <div class="col-sm-1 col-md-1 col-lg-1">
   </div>
-  <div class="col-sm-12 col-md-9 col-lg-9">
-  </div>
-</div>
-<div class="row" style="margin-top: 10px;">
-  <div class="col-sm-12 col-md-12 col-lg-12">
-    <div *ngIf="todays_snack">
-    <h3>Following is the snack which will be available today, If you are interested to order, Please click the button
-      before 3 PM</h3>
-    <table class="table table-striped text-center">
-      <tbody>
-      <tr>
-        <td style="text-align: left">{{ todays_snack.snack_name}}</td>
-        <td style="text-align: left">{{ todays_snack.date | date:'EEE dd, MMM yyyy'}}</td>
 
-        <td> <label class="switch">
-          <input type="checkbox" (click)="toggle_order()" [checked]="ordered">
-          <span class="slider round"></span>
-        </label>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    </div>
-    <div class="alert alert-success text-center" *ngIf="!todays_snack">There are no Snacks for today, Please contact
-    Administrator
+  <div class="col-sm-10 col-md-10 col-lg-10">
+    <div class="table-responsive"
+         style="border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+      <table class="table text-center">
+        <tr class="bg-sky" style="height: 40px">
+          <th class="text-center">
+            <span class="th-header text-center" style="font-size: 18px; text-transform: uppercase">WE HAVE</span>
+            <span *ngIf="snack_info.name" class="th-header text-center" style="font-size: 18px; text-transform: uppercase; font-weight: bold">{{
+              ' ' + snack_info.name + ' '}}</span>
+            <span class="th-header text-center" style="font-size: 18px; text-transform: uppercase">ON THE MENU
+              TODAY!</span>
+          </th>
+        </tr>
+        <tbody>
+        <tr>
+          <td style="border: none;">
+            <img style="width: 300px; height: 300px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" src="{{ snack_info.image_url }}"
+                 onerror="this.src='../../../../assets/images/empty_plate.jpg';"></td>
+        </tr>
+        <tr>
+          <td style="border: none;">
+            <label class="th-header" style="color: black; vertical-align: center">PLACE YOUR ORDER</label>
+            <label style="margin-left: 10px" class="switch">
+              <input type="checkbox" (click)="toggle_order()" [checked]="ordered">
+              <span class="slider round"></span>
+            </label>
+          </td>
+        </tr >
+        <tr class="th-header text-center" style="background-color: lightgray;">
+          <td style="border: none;"><label class="th-header text-center" style="background-color: lightgray; color: black">*If you are interested to order, please place
+            your order
+            before 3 PM</label></td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+  <div class="col-sm-1 col-md-1 col-lg-1">
+  </div>
+
+</div>
+
+
+<div *ngIf="user.is_super">
+
+<div class="row" style="margin-top: 40px">
+  <div class="col-sm-1 col-md-1 col-lg-1">
+  </div>
+  <div class="col-sm-6 col-md-6 col-lg-6">
+    <label style="text-align: left; margin-left: 5px; font-weight: bold; font-size: 18px; font-family: 'Helvetica';
+">{{ totalCount + ' '}}</label>
+    <label style="text-align: left; margin-left: 5px; font-weight: normal; font-size: 14px; font-family: 'Helvetica';
+">EMPLOYEE(S) HAVE PLACED THE ORDER TODAY</label>
+  </div>
+  <div class="col-sm-4 col-md-4 col-lg-4">
+  </div>
+  <div class="col-sm-1 col-md-1 col-lg-1">
+  </div>
+
+</div>
+
+<div class="row" style="margin-top: 15px;">
+  <div class="col-sm-1 col-md-1 col-lg-1">
+  </div>
+  <div class="col-sm-10 col-md-10 col-lg-10">
+    <div class="table-responsive" style="border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+      <table class="table text-center" style="border-radius: 5px;">
+        <tr class="bg-sky" style="height: 40px">
+          <th class="th-header" style="width: 80%; text-align: left;  font-size: 16px">EMPLOYEES</th>
+          <th class="th-header" style="width: 20%; text-align: right; font-size: 16px">TODAY'S ORDER STATUS</th>
+        </tr>
+        <tbody>
+        <tr class="table-bg" *ngFor="let obj of userList;">
+          <td class="rw-title" style="text-align: left">{{ obj.name }}</td>
+          <td class="rw-title" style="text-align: right">
+            <span *ngIf="obj.choice">YES</span>
+            <span *ngIf="!obj.choice">NO</span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-sm-1 col-md-1 col-lg-1">
+  </div>
+
+</div>
+
 </div>
