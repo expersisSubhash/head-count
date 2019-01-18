@@ -350,7 +350,7 @@ def notify_change():
         to_list = get_user_emails_for_snack_day(snack_day)
         # Send the mail with this password
         content = "There is a change in Snack that was scheduled for Today, Please visit the site and update " \
-                  "your choice, The new snack is" + snack_day.snack_for_day.name
+                  "your choice, The new snack is " + snack_day.snack_for_day.name
         sent = helpers.send_email(to_list, content)
         if sent:
             print('Email sent successfully')
