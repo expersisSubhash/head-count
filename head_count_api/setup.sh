@@ -33,6 +33,7 @@ echo ""
 echo "------------------------------------------------------------"
 echo "Loading initial data"
 echo ""
+python cut_out_time.py
 
 # run collectstatic
 python manage.py collectstatic --no-input

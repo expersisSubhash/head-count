@@ -19,14 +19,10 @@ export class UserService {
   }
 
   newUser(formData): Observable<any> {
-    console.log('inside /api/newUser/');
-    console.log(formData);
     return this.http.post<any>('/api/users/', formData);
   }
 
   editUser(formData): Observable<any> {
-    console.log('inside /api/editUser/');
-    console.log(formData);
     return this.http.put(`/api/editUser/${formData.id}/`, formData);
   }
 

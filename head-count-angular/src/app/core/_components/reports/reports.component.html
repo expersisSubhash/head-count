@@ -1,3 +1,51 @@
-<p>
-  Report works!
-</p>
+<app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+<div class="row">
+  <div class="col-sm-12 col-md-4 col-lg-4">
+    <div class="btn-group">
+      <a [ngClass]="{'btn': true, 'btn-primary': selectedTab === 1, 'btn-default': selectedTab !== 1, 'btn-sm': true}" (click)="refreshPage(1)">Preferences</a>
+      <a [ngClass]="{'btn': true, 'btn-primary': selectedTab === 2, 'btn-default': selectedTab !== 2, 'btn-sm': true}" (click)="refreshPage(2)">Reports</a>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-8 col-lg-8">
+  </div>
+</div>
+<!--Test Plans-->
+<div class="row" style="margin-top: 10px;" *ngIf="selectedTab === 1">
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <div class="table-responsive" *ngIf="settings.length > 0">
+      <table class="table table-striped text-center">
+        <thead class="bg-sky">
+          <tr>
+            <td>KEY</td>
+            <td>VALUE</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ptp of settings">
+            <td>{{ ptp.key }}</td>
+            <td>
+              <div style="width: 70px;margin:auto;">
+                <select class="form-control input-sm" [(ngModel)]="ptp.value">
+                  <option [value]="15">3 PM</option>
+                  <option [value]="16">4 PM</option>
+                  <option [value]="17">5 PM</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-right">
+      <button class="btn btn-primary" (click)="saveChanges()">Save</button>
+    </div>
+    <div class="alert alert-success" *ngIf="settings.length === 0">There are no preferences</div>
+  </div>
+</div>
+
+<!--Tests-->
+<div class="row" style="margin-top: 10px;" *ngIf="selectedTab === 2">
+  <div class="col-sm-12 col-md-12 col-lg-12">
+   <p> Reports are coming soon<p>
+  </div>
+</div>

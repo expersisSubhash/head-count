@@ -3,6 +3,8 @@ import {takeWhile} from 'rxjs/internal/operators';
 import {SnackService} from '../../_services/snack.service';
 import {AlertService} from '../../../shared/_components/alert/alert.service';
 import {Snack, TodaysSnack} from '../../_models/snack';
+import {ReportsService} from '../../_services/reports.service';
+import {error} from 'util';
 
 @Component({
   selector: 'app-user-snacks-detail',
@@ -19,10 +21,13 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
   userList: any;
   totalCount: 0;
   disable_choice_button = false;
+  display_time = ' ';
+  cut_out_time: number;
 
   constructor(
     private snackService: SnackService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private reportService: ReportsService
   ) {
   }
 
@@ -35,14 +40,14 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
     } else {
       this.alertService.error('Please login');
     }
-    if ( this.user.is_super) {
+    if (this.user.is_super) {
       this.getInterestedUserCount();
     }
 
+    this.getCutoutTime();
     setInterval(() => {
       const time = new Date().getHours();
-      // TODO: Read this value from settings
-      if (time >= 15) {
+      if (time >= this.cut_out_time) {
         this.disable_choice_button = true;
       }
     }, 1000);
@@ -55,7 +60,27 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
         this.userList = data['user_list'];
         this.totalCount = data['user_count'];
       },
-      error => {
+      err => {
+        this.alertService.error(err);
+      });
+  }
+
+  getCutoutTime() {
+    this.reportService.getAllPreferences().pipe(takeWhile(() => this.alive)).subscribe(data => {
+        if (data['preferences']) {
+          const tmp = data['preferences'][0];
+          this.cut_out_time = tmp['value'];
+          const val_converted = this.cut_out_time % 12;
+          this.display_time = val_converted.toString() + ' PM';
+
+          const time = new Date().getHours();
+          if (time >= this.cut_out_time) {
+            this.disable_choice_button = true;
+          }
+        }
+      },
+      er => {
+        this.alertService.error(er);
       });
   }
 
@@ -63,13 +88,13 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
     this.snackService.getSnackForToday(this.user.id).pipe(takeWhile(() => this.alive)).subscribe(
       data => {
         console.log(data);
-        this.todays_snack =  data['snack'];
-        this.snack_info =  data['snack_info'];
+        this.todays_snack = data['snack'];
+        this.snack_info = data['snack_info'];
         this.ordered = data['choice'];
       },
-      error => {
+      err => {
         console.log(error);
-        this.alertService.error(error);
+        this.alertService.error(err);
       });
   }
 

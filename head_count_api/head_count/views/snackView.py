@@ -15,7 +15,6 @@ import os
 import _thread
 
 
-
 @api_view(['GET', 'POST'])
 @permission_classes((AllowAny,))
 def snack_list(request):

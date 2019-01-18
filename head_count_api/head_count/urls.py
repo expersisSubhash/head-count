@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from head_count.views import userView, snackView
+from head_count.views import userView, snackView, preferencesView
 
 urlpatterns = [
     url('api-token-auth/', userView.login),
@@ -21,6 +21,8 @@ urlpatterns = [
     url(r'^getSnackForDates/$', snackView.get_snacks_for_dates),
     url(r'^createSnackDayMapping/$', snackView.save_snacks_for_dates),
     url(r'^getInterestedUsersCount/$', snackView.get_interested_users_count),
+    url(r'^preferences/$', preferencesView.preferences_list),
+    url(r'^preferences/$', preferencesView.preferences_list),
 
 ]
 
