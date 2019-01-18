@@ -1,12 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../_services/auth.service';
 import {Router} from '@angular/router';
-import {takeWhile} from 'rxjs/operators';
 import {SidebarService} from '../../_services/sidebar.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
-import {NewUserComponent} from '../new-user/new-user.component';
 import {ChangePasswordComponent} from '../change-password/change-password.component';
-import {SnackService} from '../../_services/snack.service';
 
 @Component({
   selector: 'app-navbar',
@@ -25,7 +22,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private router: Router,
     private sidebarService: SidebarService,
     private bsModalService: BsModalService,
-    private snackService: SnackService
   ) {
   }
 

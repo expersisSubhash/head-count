@@ -18,6 +18,7 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
   user: any;
   userList: any;
   totalCount: 0;
+  disable_choice_button = false;
 
   constructor(
     private snackService: SnackService,
