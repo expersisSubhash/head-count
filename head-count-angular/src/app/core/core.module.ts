@@ -21,6 +21,7 @@ import { SnackDayComponent } from './_components/snack-day/snack-day.component';
 import {ConfirmAlertBoxComponent} from './_components/confirm-alert-box/confirm-alert-box.component';
 import { ChangePasswordComponent } from './_components/change-password/change-password.component';
 import { ForgotPasswordComponent } from './_components/forgot-password/forgot-password.component';
+import { ReportsComponent } from './_components/reports/reports.component';
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { ForgotPasswordComponent } from './_components/forgot-password/forgot-pa
     SnackDayComponent,
     ConfirmAlertBoxComponent,
     ChangePasswordComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ReportsComponent
   ],
   providers: [
     AuthService,

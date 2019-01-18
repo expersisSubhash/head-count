@@ -8,6 +8,7 @@ import {UserSnacksDetailComponent} from './core/_components/user-snacks-detail/u
 import {SnacksListComponent} from './core/_components/snacks-list/snacks-list.component';
 import {UserListComponent} from './core/_components/user-list/user-list.component';
 import {SnackDayComponent} from './core/_components/snack-day/snack-day.component';
+import {ReportsComponent} from './core/_components/reports/reports.component';
 
 
 const appRoutes: Routes = [
@@ -18,6 +19,7 @@ const appRoutes: Routes = [
       {path: 'snacks', component: SnacksListComponent, canActivate: [AuthGuard]},
       {path: 'users', component: UserListComponent, canActivate: [AuthGuard]},
       {path: 'snack-day', component: SnackDayComponent, canActivate: [AuthGuard]},
+      {path: 'reports', component: ReportsComponent, canActivate: [AuthGuard]},
     ]
   },
   {path: '**', component: PageNotFoundComponent}
