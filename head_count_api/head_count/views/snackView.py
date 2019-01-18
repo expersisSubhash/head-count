@@ -12,6 +12,8 @@ from head_count.helpers import constants, helpers
 from PIL import Image
 from django.db import transaction
 import os
+import _thread
+
 
 
 @api_view(['GET', 'POST'])
@@ -266,16 +268,10 @@ def save_snacks_for_dates(request):
     msg = ''
     try:
         data = request.data
-        is_todays_snack_updated = False
         today = datetime.now(timezone.utc).date()  # UTC time
         # Walk through this dates and get Snack if any
         for tmp in data:
             try:
-                if 'date' in tmp:
-                    date = datetime.fromtimestamp(tmp['date'] / 1000.0).date()
-                    if date == today:
-                        is_todays_snack_updated = True
-
                 # Update
                 if 'snack_day_mapping_id' in tmp and tmp['snack_day_mapping_id']:
                     obj = SnackDayMapping.objects.get(id=tmp['snack_day_mapping_id'])
@@ -305,8 +301,7 @@ def save_snacks_for_dates(request):
         if not error:
             msg = 'Changes saved successfully'
 
-        if is_todays_snack_updated:
-            notify_change()
+        _thread.start_new_thread(post_processing, (data,))
 
     except Exception as e:
         msg = "Something went wrong while saving your choice : " + str(e)
@@ -341,6 +336,34 @@ def get_interested_users_count(request):
     context_data[constants.RESPONSE_ERROR] = error
     context_data[constants.RESPONSE_MESSAGE] = msg
     return JsonResponse(context_data, status=200)
+
+
+def post_processing(data):
+    today = datetime.now(timezone.utc).date()
+    is_todays_snack_updated = False
+
+    for tmp in data:
+        try:
+            if 'date' in tmp:
+                date = datetime.fromtimestamp(tmp['date'] / 1000.0).date()
+                if date == today:
+                    is_todays_snack_updated = True
+
+            # Get each snack and see if its price has changed
+            if 'snack' in tmp and tmp['snack']:
+                try:
+                    snack = Snack.objects.get(id=tmp['snack'])
+                    if snack.default_price != tmp['price']:
+                        snack.default_price = tmp['price']
+                        snack.save()
+                except Snack.DoesNotExist as e:
+                    print(str(e))
+
+        except Exception as e:
+            print(str(e))
+
+    if is_todays_snack_updated:
+        notify_change()
 
 
 # Get all the user who had marked either yes/no for today's snack
