@@ -25,6 +25,7 @@ export class NewUserComponent implements OnInit, OnDestroy {
       first_name: ['', Validators.required],
       email: ['', Validators.email],
       last_name: ['', Validators.required],
+      is_superuser: [false, Validators.required]
     });
   }
 
@@ -40,6 +41,7 @@ export class NewUserComponent implements OnInit, OnDestroy {
           first_name: user.first_name,
           email: user.email,
           last_name: user.last_name,
+          is_superuser: user.is_superuser
         });
       } else {
         this.alertService.error(response.msg);
