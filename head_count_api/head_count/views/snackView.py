@@ -15,7 +15,7 @@ import os
 
 
 @api_view(['GET', 'POST'])
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 def snack_list(request):
     context_data = dict()
     msg = ''
@@ -110,7 +110,7 @@ def snack_list(request):
 
 
 @api_view(['GET', 'POST', 'DELETE', 'PUT'])
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 def snack_detail(request, pk):
     context_data = dict()
     try:
@@ -156,7 +156,7 @@ def snack_detail(request, pk):
 
 
 @api_view(['GET', 'POST'])
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 def get_snack_for_today(request, pk):
     context_data = dict()
     msg = ''
@@ -189,7 +189,7 @@ def get_snack_for_today(request, pk):
 
 
 @api_view(['GET', 'POST'])
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 def save_user_snack_and_choice(request):
     context_data = dict()
     error = False
@@ -200,9 +200,10 @@ def save_user_snack_and_choice(request):
         snack_day_mapping_id = data['snack_day_id']
         choice = data['choice']
 
-        user, created = UserSnackDayMapping.objects.get_or_create(user_id=user_id, defaults={'user_id': user_id,
-                                                                                             'users_snack_id':
-                                                                                                 snack_day_mapping_id})
+        user, created = UserSnackDayMapping.objects.get_or_create(user_id=user_id, users_snack_id=snack_day_mapping_id,
+                                                                  defaults={'user_id': user_id,
+                                                                            'users_snack_id':
+                                                                                snack_day_mapping_id})
         if user:
             user.choice = choice
             user.save()
@@ -220,7 +221,7 @@ def save_user_snack_and_choice(request):
 
 
 @api_view(['POST'])
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 def get_snacks_for_dates(request):
     context_data = dict()
     error = False
@@ -231,7 +232,7 @@ def get_snacks_for_dates(request):
         date_snack_list = list()
         for date in data:
             date_snack_dict = dict()
-            date_obj = datetime.fromtimestamp(date/1000.0).date()
+            date_obj = datetime.fromtimestamp(date / 1000.0).date()
 
             snack_for_day_qs = SnackDayMapping.objects.filter(date=date_obj)
             if snack_for_day_qs and len(snack_for_day_qs) > 0:
@@ -258,7 +259,7 @@ def get_snacks_for_dates(request):
 
 
 @api_view(['POST'])
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 def save_snacks_for_dates(request):
     context_data = dict()
     error = False
@@ -271,7 +272,7 @@ def save_snacks_for_dates(request):
         for tmp in data:
             try:
                 if 'date' in tmp:
-                    date = datetime.fromtimestamp(tmp['date']/1000.0).date()
+                    date = datetime.fromtimestamp(tmp['date'] / 1000.0).date()
                     if date == today:
                         is_todays_snack_updated = True
 
@@ -282,7 +283,7 @@ def save_snacks_for_dates(request):
                     if 'snack' in tmp and tmp['snack']:
                         # Get the object with snack_day_mapping_id
                         obj.snack_for_day_id = tmp['snack']
-                        obj.date = datetime.fromtimestamp(tmp['date']/1000.0).date()
+                        obj.date = datetime.fromtimestamp(tmp['date'] / 1000.0).date()
                         obj.price_for_day = tmp['price']
                         obj.save()
                     else:
@@ -291,7 +292,7 @@ def save_snacks_for_dates(request):
                 else:
                     if 'snack' in tmp and tmp['snack']:
                         SnackDayMapping.objects.create(snack_for_day_id=tmp['snack'],
-                                                       date=datetime.fromtimestamp(tmp['date']/1000.0).date(),
+                                                       date=datetime.fromtimestamp(tmp['date'] / 1000.0).date(),
                                                        price_for_day=tmp['price'])
 
             except SnackDayMapping.DoesNotExist as e:
@@ -317,7 +318,7 @@ def save_snacks_for_dates(request):
 
 
 @api_view(['GET'])
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 def get_interested_users_count(request):
     context_data = dict()
     error = False

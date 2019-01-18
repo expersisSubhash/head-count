@@ -38,6 +38,14 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
     if ( this.user.is_super) {
       this.getInterestedUserCount();
     }
+
+    setInterval(() => {
+      const time = new Date().getHours();
+      // TODO: Read this value from settings
+      if (time >= 15) {
+        this.disable_choice_button = true;
+      }
+    }, 1000);
   }
 
   getInterestedUserCount() {

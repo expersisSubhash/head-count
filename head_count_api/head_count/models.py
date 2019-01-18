@@ -28,6 +28,14 @@ class UserSnackDayMapping(models.Model):
     choice = models.BooleanField(default=False)
 
 
+class SystemPreferences(models.Model):
+    key = models.CharField(max_length=120, primary_key=True)
+    value = models.TextField(blank=True)
+
+    def __unicode__(self):
+        return self.key
+
+
 
 
 

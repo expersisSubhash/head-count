@@ -24,7 +24,7 @@
             </div>
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="!disable_choice_button">
           <td style="border: none;line-height: 2;">
             <label class="th-header" style="color: black; vertical-align: center">PLACE YOUR ORDER</label>
             <label style="margin-left: 10px" class="switch">
@@ -33,6 +33,16 @@
             </label>
           </td>
         </tr >
+        <tr *ngIf="disable_choice_button">
+          <td style="border: none;line-height: 2;">
+            <label class="th-header" style="color: black; vertical-align: center">YOU CAN NOT CHANGE THE ORDER STATUS NOW</label>
+            <!--<label style="margin-left: 10px" class="switch">-->
+              <!--<input type="checkbox" (click)="toggle_order()" [checked]="ordered">-->
+              <!--<span class="slider round"></span>-->
+            <!--</label>-->
+          </td>
+        </tr >
+
         <tr class="th-header text-center" style="background-color: lightgray;">
           <td style="border: none;"><label class="th-header text-center" style="background-color: lightgray; color: black">*If you are interested to order, please place
             your order
