@@ -23,6 +23,7 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
   disable_choice_button = false;
   display_time = ' ';
   cut_out_time: number;
+  snack_name: '-';
 
   constructor(
     private snackService: SnackService,
@@ -90,6 +91,9 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
         console.log(data);
         this.todays_snack = data['snack'];
         this.snack_info = data['snack_info'];
+        if ( this.snack_info && this.snack_info.name ) {
+          this.snack_name = this.snack_info.name;
+        }
         this.ordered = data['choice'];
       },
       err => {
