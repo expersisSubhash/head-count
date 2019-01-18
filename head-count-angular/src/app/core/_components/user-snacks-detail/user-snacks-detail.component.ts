@@ -75,6 +75,7 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
     this.snackService.saveUsersSnackChoice(param).pipe(takeWhile(() => this.alive)).subscribe(
       data => {
         this.alertService.success(data['msg']);
+        this.getInterestedUserCount();
       },
       error => {
         this.alertService.error(error);
