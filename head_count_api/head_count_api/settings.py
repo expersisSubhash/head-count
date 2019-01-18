@@ -136,7 +136,11 @@ STATICFILES_DIRS = [
 ]
 
 # Upload external files and media
-MEDIA_ROOT = os.path.join(BASE_DIR, 'head_count/uploads')
+MEDIA_ROOT = (
+    os.path.join(BASE_DIR, 'head_count', 'uploads').replace(
+        "\\", '/'
+    )
+)
 
 MEDIA_URL = '/head_count/uploads/'
 
