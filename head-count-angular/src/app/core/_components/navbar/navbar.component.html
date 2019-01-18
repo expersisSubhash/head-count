@@ -24,14 +24,25 @@
 <nav class="navbar navbar-default navbar-fixed-top navc">
   <div class="container-fluid">
     <div class="l">
-      <span class="t-brand"><a (click)="openRouterLink('/')">{{ projectTitle }}</a></span>
+      <span class="t-brand">
+        <img style="height: 45px; width: 45px; margin-left: 25px" src="../../../../assets/images/xebrium-logo-white.png">
+        <a style="margin-left: 10px" (click)="openRouterLink('/')">{{ projectTitle }}</a>
+      </span>
     </div>
     <div class="r nav-bal">
       <div class="nav-time">
-      <span style="padding-left: 10px">{{ now | date: 'EEE dd, MMM h:mm a' }}</span>
-
+      <span style="padding-left: 5px">{{ now | date: 'EEE dd, MMM h:mm a' }}</span>
       </div>
-
+    </div>
+    <div class="r nav-bal">
+      <div class="nav-time">
+    <span style="padding-left: 5px"><img style="width: 9px ; height:35px" src="../../../../assets/images/Separator.png"></span>
+      </div>
+    </div>
+    <div class="r nav-bal">
+      <div class="nav-name">
+      <span style="padding-left: 5px">{{ 'Hi ' + user.first_name }}</span>
+      </div>
     </div>
     <div class="clr"></div>
   </div>
