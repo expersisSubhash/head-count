@@ -9,7 +9,8 @@
         <tr class="bg-sky" style="height: 40px">
           <th class="text-center">
             <span class="th-header text-center" style="font-size: 18px; text-transform: uppercase">WE HAVE</span>
-            <span *ngIf="snack_info" class="th-header text-center" style="font-size: 18px; text-transform: uppercase; font-weight: bold">{{
+            <span *ngIf="snack_info" class="th-header text-center"
+                  style="font-size: 18px; text-transform: uppercase; font-weight: bold">{{
               ' ' + snack_info.name + ' '}}</span>
             <span class="th-header text-center" style="font-size: 18px; text-transform: uppercase">ON THE MENU
               TODAY!</span>
@@ -19,8 +20,10 @@
         <tr *ngIf="snack_info">
           <td style="border: none;">
             <div style="max-width:300px;max-height: 300px;margin: auto;">
-            <img class="img-responsive" style="border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" src="{{ snack_info.image_url }}"
-                 onerror="this.src='../../../../assets/images/empty_plate.jpg';">
+              <img class="img-responsive"
+                   style="border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
+                   src="{{ snack_info.image_url }}"
+                   onerror="this.src='../../../../assets/images/empty_plate.jpg';">
             </div>
           </td>
         </tr>
@@ -32,19 +35,21 @@
               <span class="slider round"></span>
             </label>
           </td>
-        </tr >
+        </tr>
         <tr *ngIf="disable_choice_button">
           <td style="border: none;line-height: 2;">
-            <label class="th-header" style="color: black; vertical-align: center">YOU CAN NOT CHANGE THE ORDER STATUS NOW</label>
+            <label class="th-header" style="color: black; vertical-align: center">YOU CAN NOT CHANGE THE ORDER STATUS
+              NOW</label>
             <!--<label style="margin-left: 10px" class="switch">-->
-              <!--<input type="checkbox" (click)="toggle_order()" [checked]="ordered">-->
-              <!--<span class="slider round"></span>-->
+            <!--<input type="checkbox" (click)="toggle_order()" [checked]="ordered">-->
+            <!--<span class="slider round"></span>-->
             <!--</label>-->
           </td>
-        </tr >
+        </tr>
 
         <tr class="th-header text-center" style="background-color: lightgray;">
-          <td style="border: none;"><label class="th-header text-center" style="background-color: lightgray; color: black">
+          <td style="border: none;"><label class="th-header text-center"
+                                           style="background-color: lightgray; color: black">
             *If you are interested in order, please place
             it before 3 PM today</label></td>
         </tr>
@@ -60,48 +65,49 @@
 
 <div *ngIf="user.is_super">
 
-<div class="row" style="margin-top: 40px">
-  <div class="col-sm-1 col-md-1 col-lg-1">
-  </div>
-  <div class="col-sm-6 col-md-6 col-lg-6">
-    <label style="text-align: left; margin-left: 5px; font-weight: bold; font-size: 18px; font-family: 'Helvetica';
-">{{ totalCount + ' '}}</label>
-    <label style="text-align: left; margin-left: 5px; font-weight: normal; font-size: 14px; font-family: 'Helvetica';
-">EMPLOYEE(S) HAVE PLACED THE ORDER TODAY</label>
-  </div>
-  <div class="col-sm-4 col-md-4 col-lg-4">
-  </div>
-  <div class="col-sm-1 col-md-1 col-lg-1">
-  </div>
-
-</div>
-
-<div class="row" style="margin-top: 15px;">
-  <div class="col-sm-1 col-md-1 col-lg-1">
-  </div>
-  <div class="col-sm-10 col-md-10 col-lg-10">
-    <div class="table-responsive" style="border-radius: 5px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-      <table class="table text-center" style="border-radius: 5px;">
-        <tr class="bg-sky" style="height: 40px">
-          <th class="th-header" style="width: 80%; text-align: left;  font-size: 16px">EMPLOYEES</th>
-          <th class="th-header" style="width: 20%; text-align: right; font-size: 16px">TODAY'S ORDER STATUS</th>
-        </tr>
-        <tbody>
-        <tr class="table-bg" *ngFor="let obj of userList;">
-          <td class="rw-title" style="text-align: left">{{ obj.name }}</td>
-          <td class="rw-title" style="text-align: right">
-            <span *ngIf="obj.choice">YES</span>
-            <span *ngIf="!obj.choice">NO</span>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+  <div class="row" style="margin-top: 40px">
+    <div class="col-sm-1 col-md-1 col-lg-1">
     </div>
-  </div>
-  <div class="col-sm-1 col-md-1 col-lg-1">
+    <div class="col-sm-6 col-md-6 col-lg-6">
+      <img src="../../../../assets/images/tag.png" style="width: 40px; height: 40px">
+      <label style="width: 20px; text-align: center; margin-left: -30px; vertical-align: center; font-weight: bold; font-size: 18px;
+        font-family: 'Helvetica'; color: white">{{ totalCount}}</label>
+      <label style="text-align: left; margin-left: 20px; font-weight: normal; font-size: 14px; font-family: 'Helvetica';
+">EMPLOYEE(S) HAVE PLACED THE ORDER TODAY</label>
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-4">
+    </div>
+    <div class="col-sm-1 col-md-1 col-lg-1">
+    </div>
+
   </div>
 
-</div>
+  <div class="row" style="margin-top: 15px;">
+    <div class="col-sm-1 col-md-1 col-lg-1">
+    </div>
+    <div class="col-sm-10 col-md-10 col-lg-10">
+      <div class="table-responsive" style="border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+        <table class="table text-center" style="border-radius: 5px;">
+          <tr class="bg-sky" style="height: 40px">
+            <th class="th-header" style="width: 80%; text-align: left;  font-size: 16px">EMPLOYEES</th>
+            <th class="th-header" style="width: 20%; text-align: right; font-size: 16px">TODAY'S ORDER STATUS</th>
+          </tr>
+          <tbody>
+          <tr class="table-bg" *ngFor="let obj of userList;">
+            <td class="rw-title" style="text-align: left">{{ obj.name }}</td>
+            <td class="rw-title" style="text-align: right">
+              <span *ngIf="obj.choice">YES</span>
+              <span *ngIf="!obj.choice">NO</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-1 col-md-1 col-lg-1">
+    </div>
+
+  </div>
 
 </div>
