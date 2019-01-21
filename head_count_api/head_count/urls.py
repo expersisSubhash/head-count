@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^getInterestedUsersCount/$', snackView.get_interested_users_count),
     url(r'^preferences/$', preferencesView.preferences_list),
     url(r'^preferences/$', preferencesView.preferences_list),
+    url(r'^getSnackReport/$', snackView.get_snack_report_for_dates),
 
 ]
 

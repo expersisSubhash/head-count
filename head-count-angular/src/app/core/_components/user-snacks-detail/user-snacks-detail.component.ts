@@ -118,8 +118,8 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
         this.alertService.success(data['msg']);
         this.getInterestedUserCount();
       },
-      error => {
-        this.alertService.error(error);
+      err => {
+        this.alertService.error(err);
       });
   }
 

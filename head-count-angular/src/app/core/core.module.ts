@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import {AuthService} from './_services/auth.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
@@ -10,7 +10,7 @@ import {LandingComponent} from './_components/landing/landing.component';
 import { DashboardComponent } from './_components/dashboard/dashboard.component';
 import {NavbarComponent} from './_components/navbar/navbar.component';
 import {SidebarComponent} from './_components/sidebar/sidebar.component';
-import {BsDropdownModule, ModalModule} from 'ngx-bootstrap';
+import {BsDatepickerModule, BsDropdownModule, ModalModule} from 'ngx-bootstrap';
 import {UserSnacksDetailComponent} from './_components/user-snacks-detail/user-snacks-detail.component';
 import {SnacksListComponent} from './_components/snacks-list/snacks-list.component';
 import {NewSnackComponent} from './_components/new-snack/new-snack.component';
@@ -33,6 +33,7 @@ import { ReportsComponent } from './_components/reports/reports.component';
     SharedModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
+    BsDatepickerModule.forRoot(),
   ],
   declarations: [
     LoginComponent,

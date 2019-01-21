@@ -3,7 +3,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
 import datetime
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from head_count.models import Snack, SnackDayMapping, UserSnackDayMapping
 from head_count.serializers.snackSerializer import (SnackSerializer, SnackDayMappingSerializer,
                                                     UserSnackMappingSerializer)
@@ -302,6 +302,60 @@ def save_snacks_for_dates(request):
 
         _thread.start_new_thread(post_processing, (data,))
 
+    except Exception as e:
+        msg = "Something went wrong while saving your choice : " + str(e)
+        error = True
+
+    context_data[constants.RESPONSE_ERROR] = error
+    context_data[constants.RESPONSE_MESSAGE] = msg
+    return JsonResponse(context_data, status=200)
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))
+def get_snack_report_for_dates(request):
+    context_data = dict()
+    error = False
+    msg = ''
+    try:
+        data = request.data
+        print(data)
+        # Get the
+        from_date = datetime.fromtimestamp(data['from_date'] / 1000.0).date()
+        to_date = datetime.fromtimestamp(data['to_date'] / 1000.0).date()
+        qs = UserSnackDayMapping.objects.filter(users_snack__date__range=[from_date, to_date])
+        # Start from the from date and go till the end date
+        records = list()
+        grand_total = 0
+        while from_date <= to_date:
+            detail_dict = {}
+            name = 'No Snack'
+            total = 0
+            price = 0
+
+            d = timedelta(days=1)
+            date_objs = qs.filter(users_snack__date=from_date)
+            if len(date_objs) > 0:
+                # Get the snack
+                user_snack_obj = date_objs[0]
+                # Get the snack
+                user_snack = user_snack_obj.users_snack
+                if user_snack:
+                    name = user_snack.snack_for_day.name
+                price = user_snack.price_for_day
+                # Calculate the total for the day
+                total = len(date_objs) * price
+            detail_dict['date'] = from_date
+            detail_dict['snack_name'] = name
+            detail_dict['total'] = total
+            detail_dict['price'] = price
+            detail_dict['orders'] = len(date_objs)
+            grand_total += total
+            from_date = from_date + d
+            records.append(detail_dict)
+
+        context_data['data'] = records
+        context_data['grand_total'] = grand_total
     except Exception as e:
         msg = "Something went wrong while saving your choice : " + str(e)
         error = True

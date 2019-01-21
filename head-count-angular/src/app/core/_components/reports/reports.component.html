@@ -1,8 +1,10 @@
 <div class="row">
   <div class="col-sm-12 col-md-4 col-lg-4">
     <div class="btn-group">
-      <a [ngClass]="{'btn': true, 'btn-primary': selectedTab === 1, 'btn-default': selectedTab !== 1, 'btn-sm': true}" (click)="refreshPage(1)">Preferences</a>
-      <a [ngClass]="{'btn': true, 'btn-primary': selectedTab === 2, 'btn-default': selectedTab !== 2, 'btn-sm': true}" (click)="refreshPage(2)">Reports</a>
+      <a [ngClass]="{'btn': true, 'btn-primary': selectedTab === 1, 'btn-default': selectedTab !== 1, 'btn-sm': true}"
+         (click)="refreshPage(1)">Preferences</a>
+      <a [ngClass]="{'btn': true, 'btn-primary': selectedTab === 2, 'btn-default': selectedTab !== 2, 'btn-sm': true}"
+         (click)="refreshPage(2)">Reports</a>
     </div>
   </div>
   <div class="col-sm-12 col-md-8 col-lg-8">
@@ -14,24 +16,24 @@
     <div class="table-responsive" *ngIf="settings.length > 0">
       <table class="table table-striped text-center">
         <thead class="bg-sky">
-          <tr>
-            <td>KEY</td>
-            <td>VALUE</td>
-          </tr>
+        <tr>
+          <td>KEY</td>
+          <td>VALUE</td>
+        </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let ptp of settings">
-            <td>{{ ptp.key }}</td>
-            <td>
-              <div style="width: 70px;margin:auto;">
-                <select class="form-control input-sm" [(ngModel)]="ptp.value">
-                  <option [value]="15">3 PM</option>
-                  <option [value]="16">4 PM</option>
-                  <option [value]="17">5 PM</option>
-                </select>
-              </div>
-            </td>
-          </tr>
+        <tr *ngFor="let ptp of settings">
+          <td>{{ ptp.key }}</td>
+          <td>
+            <div style="width: 70px;margin:auto;">
+              <select class="form-control input-sm" [(ngModel)]="ptp.value">
+                <option [value]="15">3 PM</option>
+                <option [value]="16">4 PM</option>
+                <option [value]="17">5 PM</option>
+              </select>
+            </div>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -44,7 +46,52 @@
 
 <!--Tests-->
 <div class="row" style="margin-top: 10px;" *ngIf="selectedTab === 2">
-  <div class="col-sm-12 col-md-12 col-lg-12">
-   <p> Reports are coming soon<p>
+  <div class="row">
+    <div class="col-sm-2 col-md-2 col-lg-2">
+      <input type="text" class="form-control" placeholder="Pick from date" bsDatepicker [(ngModel)]="fromDate"
+             [bsConfig]="bsConfig" [bsValue]="bsValue"/>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+      <input type="text" class="form-control" placeholder="Pick to date" bsDatepicker [(ngModel)]="toDate"
+             [bsConfig]="bsConfig" [bsValue]="bsValue"/>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+      <button class="btn btn-primary" (click)="generate_report()">Generate</button>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 15px;">
+    <div class="col-sm-1 col-md-1 col-lg-1">
+    </div>
+    <div class="col-sm-10 col-md-10 col-lg-10" *ngIf="grand_total != -1"> Total for the selected duration : {{grand_total}}</div>
+    <div class="col-sm-10 col-md-10 col-lg-10">
+      <div class="table-responsive"
+           style="border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
+           *ngIf="dataList && dataList.length > 0">
+        <table class="table text-center" style="border-radius: 5px;">
+          <tr class="bg-sky" style="height: 40px">
+            <th class="th-header">Date</th>
+            <th class="th-header">Snack Ordered</th>
+            <th class="th-header">price</th>
+            <th class="th-header"># of Orders</th>
+            <th class="th-header">Total</th>
+          </tr>
+          <tbody>
+          <tr class="table-bg" *ngFor="let obj of dataList;">
+            <td class="rw-title" style="text-align: left">{{ obj.date }}</td>
+            <td class="rw-title" style="text-align: left">{{ obj.snack_name }}</td>
+            <td class="rw-title" style="text-align: left">{{ obj.price }}</td>
+            <td class="rw-title" style="text-align: justify">{{ obj.orders }}</td>
+            <td class="rw-title" style="text-align: left">{{ obj.total }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="alert alert-success text-center" *ngIf="dataList && dataList.length === 0">There are no users added
+      </div>
+    </div>
+    <div class="col-sm-1 col-md-1 col-lg-1">
+    </div>
+
   </div>
 </div>

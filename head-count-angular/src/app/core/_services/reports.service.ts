@@ -22,4 +22,8 @@ export class ReportsService {
     return this.http.post<any>(`/api/preferences/`, params);
   }
 
+  getSnackReport(params): Observable<any> {
+    return this.http.post<any>(`/api/getSnackReport/`, params);
+  }
+
 }
