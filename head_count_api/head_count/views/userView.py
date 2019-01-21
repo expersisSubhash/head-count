@@ -13,7 +13,6 @@ from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
 
-
 from head_count.models import User
 from head_count.serializers.userSerializer import UserSerializer
 from head_count.helpers.helpers import get_custom_error_list
@@ -23,7 +22,7 @@ from head_count.helpers import constants, helpers
 @csrf_exempt
 @api_view(["POST"])
 @authentication_classes([])
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 def login(request):
     context_data = dict()
     username = request.data.get("email")
@@ -44,7 +43,7 @@ def login(request):
 
 
 @api_view(['GET', 'POST'])
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 def user_list(request):
     context_data = dict()
     msg = ''
@@ -71,8 +70,12 @@ def user_list(request):
                 subject = 'Welcome'
                 # Send the mail with this password
                 to_list = [email]
-                content = subject + " Please use following password to login, Please make sure to reset password " \
-                                    "after you login \n" + password
+                content = subject + ", Following are your login details \n username: " + email + "\n" + "password:" \
+                          + password + "\nPlease make sure to change your password to something that you can remember."
+
+                url = request.get_host()
+                url = url + '/login'
+                content = content + "\n" + url
                 sent = helpers.send_email(to_list, content)
                 if sent:
                     print('Email with password sent successfully')
@@ -92,7 +95,7 @@ def user_list(request):
 
 
 @api_view(['GET', 'POST', 'DELETE', 'PUT'])
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 def user_detail(request, pk):
     context_data = dict()
     try:
@@ -142,7 +145,7 @@ def user_detail(request, pk):
 
 
 @api_view(['GET', 'POST', 'DELETE', 'PUT'])
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 def change_password(request):
     context_data = dict()
     try:
@@ -180,7 +183,7 @@ def change_password(request):
 
 @api_view(['GET', 'POST', 'DELETE', 'PUT'])
 @authentication_classes([])
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 def forgot_password(request):
     context_data = dict()
     try:
@@ -202,8 +205,8 @@ def forgot_password(request):
             subject = 'Reset password'
             # Send the mail with this password
             to_list = [email]
-            content = subject + " Please use following password to login, Please make sure to reset password after you " \
-                                "login \n" + password
+            content = subject + " Please use following password to login, Please make sure to reset password after " \
+                                "you login \n" + password
             sent = helpers.send_email(to_list, content)
             if sent:
                 user.set_password(password)
@@ -218,5 +221,3 @@ def forgot_password(request):
     context_data[constants.RESPONSE_ERROR] = error
     context_data[constants.RESPONSE_MESSAGE] = msg
     return JsonResponse(context_data, status=200)
-
-
