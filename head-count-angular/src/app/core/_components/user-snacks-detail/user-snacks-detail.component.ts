@@ -90,12 +90,14 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
     this.snackService.getSnackForToday(this.user.id).pipe(takeWhile(() => this.alive)).subscribe(
       data => {
         console.log(data);
-        this.todays_snack = data['snack'];
-        this.snack_info = data['snack_info'];
-        if (this.snack_info && this.snack_info.name) {
-          this.snack_name = this.snack_info.name;
+        if (data['snack']) {
+          this.todays_snack = data['snack'];
+          this.snack_info = data['snack_info'];
+          if (this.snack_info && this.snack_info.name) {
+            this.snack_name = this.snack_info.name;
+          }
+          this.ordered = data['choice'];
         }
-        this.ordered = data['choice'];
       },
       err => {
         console.log(error);

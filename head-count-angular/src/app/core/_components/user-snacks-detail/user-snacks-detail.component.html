@@ -6,7 +6,7 @@
     <div class="table-responsive"
          style="border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
       <table class="table text-center">
-        <tr class="bg-sky" style="height: 40px">
+        <tr *ngIf="snack_info" class="bg-sky" style="height: 40px">
           <th class="text-center">
             <span class="th-header text-center" style="font-size: 18px; text-transform: uppercase">WE HAVE</span>
             <span *ngIf="snack_name" class="th-header text-center"
@@ -16,7 +16,15 @@
               TODAY!</span>
           </th>
         </tr>
-        <tbody>
+
+        <tr *ngIf="!snack_info" class="bg-sky" style="height: 40px">
+          <th class="text-center">
+            <span class="th-header text-center" style="font-size: 18px; text-transform: uppercase">There is nothing marked on the Menu Today,
+            Please contact Administrator</span>
+          </th>
+        </tr>
+
+        <tbody *ngIf="snack_info">
         <tr *ngIf="snack_info">
           <td style="border: none;">
             <div style="max-width:300px;max-height: 300px;margin: auto;">
