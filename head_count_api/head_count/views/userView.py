@@ -50,7 +50,7 @@ def user_list(request):
     error = False
     try:
         if request.method == 'GET':
-            queryset = User.objects.order_by('-id')
+            queryset = User.objects.order_by('first_name')
             serializer = UserSerializer(queryset, many=True)
             context_data['user_list'] = serializer.data
         elif request.method == 'POST':
