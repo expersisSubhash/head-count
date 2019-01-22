@@ -2,6 +2,7 @@ from head_count.models import *
 from django.contrib.auth.models import User
 from head_count.views.snackView import get_todays_snack
 from head_count.helpers.helpers import send_email
+import datetime
 
 
 def main():
@@ -27,19 +28,25 @@ def main():
                 print(str(e))
         print(to_list)
         # Get the cut out time
-        queryset = SystemPreferences.objects.filter(key='server_address')
+        queryset = SystemPreferences.objects.filter(key='Cut out time')
         if len(queryset) > 0:
-            uri = queryset[0].value
-            uri += '/login'
-            # Build the email
-            content = "Hello, We have " + snack_obj.snack_for_day.name + " in Menu today, Please login and let us " \
-                                                                         "know if you are interested in ordering " \
-                                                                         "\n" + uri
-            sent = send_email(to_list, content)
-            if sent:
-                print('Notified successfully')
-        else:
-            print('No server address')
+            cut_out_time = int(queryset[0].value)
+            # Get the current time
+            dt = datetime.datetime.now()
+            if dt.hour < cut_out_time:
+                queryset = SystemPreferences.objects.filter(key='server_address')
+                if len(queryset) > 0:
+                    uri = queryset[0].value
+                    uri += '/login'
+                    # Build the email
+                    content = "Hello, We have " + snack_obj.snack_for_day.name + " in Menu today, Please login and " \
+                                                                                 "let us know if you are interested " \
+                                                                                 "in ordering \n" + uri
+                    sent = send_email(to_list, content)
+                    if sent:
+                        print('Notified successfully')
+                else:
+                    print('No server address')
 
 
 if __name__ == '__main__':
