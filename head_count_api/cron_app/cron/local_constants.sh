@@ -1,1 +1,1 @@
-PATH="/home/xeb/Documents/terragraph_project/myenv/bin:${PATH}"
+PATH="/home/xeb/terragraph_project/myenv/bin:${PATH}"
