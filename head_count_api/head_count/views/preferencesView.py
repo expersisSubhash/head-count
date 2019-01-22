@@ -17,8 +17,8 @@ def preferences_list(request):
     try:
         if request.method == 'GET':
             queryset = SystemPreferences.objects.get(key='Cut out time')
-            serializer = PreferencesSerializer(queryset, many=True)
-            context_data['preferences'] = serializer.data
+            serializer = PreferencesSerializer(queryset)
+            context_data['preferences'] = [serializer.data]
         elif request.method == 'POST':
             key = request.data.get('key', '')
             value = request.data.get('value', 0)
