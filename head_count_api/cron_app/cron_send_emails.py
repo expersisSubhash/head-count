@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from head_count.views.snackView import get_todays_snack
 from head_count.helpers.helpers import send_email
 import datetime
-
+import pytz
 
 def main():
     # Get today's snack
@@ -32,7 +32,7 @@ def main():
         if len(queryset) > 0:
             cut_out_time = int(queryset[0].value)
             # Get the current time
-            dt = datetime.datetime.now()
+            dt = datetime.datetime.now(pytz.timezone('Asia/Kolkata'))
             print('cut of time = ' + str(cut_out_time))
             print('current time = ' + str(dt.hour))
             if dt.hour < cut_out_time:
@@ -44,9 +44,9 @@ def main():
                     content = "Hello, We have " + snack_obj.snack_for_day.name + " in Menu today, Please login and " \
                                                                                  "let us know if you are interested " \
                                                                                  "in ordering \n" + uri
-                    # sent = send_email(to_list, content)
-                    # if sent:
-                    #     print('Notified successfully')
+                    sent = send_email(to_list, content)
+                    if sent:
+                        print('Notified successfully')
                 else:
                     print('No server address')
             else:
