@@ -4,7 +4,7 @@
 
 def main():
     try:
-        pass
+        print('cron is running')
     except Exception as e:
         print(str(e))
 
