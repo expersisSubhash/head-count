@@ -44,9 +44,9 @@ def main():
                     content = "Hello, We have " + snack_obj.snack_for_day.name + " in Menu today, Please login and " \
                                                                                  "let us know if you are interested " \
                                                                                  "in ordering \n" + uri
-                    sent = send_email(to_list, content)
-                    if sent:
-                        print('Notified successfully')
+                    # sent = send_email(to_list, content)
+                    # if sent:
+                    #     print('Notified successfully')
                 else:
                     print('No server address')
             else:
