@@ -17,6 +17,7 @@ from head_count.models import User
 from head_count.serializers.userSerializer import UserSerializer
 from head_count.helpers.helpers import get_custom_error_list
 from head_count.helpers import constants, helpers
+from head_count.models import SystemPreferences
 
 
 @csrf_exempt
@@ -39,6 +40,13 @@ def login(request):
     context_data['user'] = {'id': user.id, 'email': user.email,
                             'first_name': user.first_name, 'last_name': user.last_name,
                             'is_super': user.is_superuser}
+
+    # Save url in systempreferences
+    SystemPreferences.objects.get_or_create(key='server_address', value=request.get_host(), defaults={
+        'key': 'server_address',
+        'value':request.get_host()
+    })
+
     return Response(context_data, status=HTTP_200_OK)
 
 
