@@ -33,6 +33,8 @@ def main():
             cut_out_time = int(queryset[0].value)
             # Get the current time
             dt = datetime.datetime.now()
+            print('cut of time = ' + str(cut_out_time))
+            print('current time = ' + str(dt.hour))
             if dt.hour < cut_out_time:
                 queryset = SystemPreferences.objects.filter(key='server_address')
                 if len(queryset) > 0:
@@ -47,6 +49,8 @@ def main():
                         print('Notified successfully')
                 else:
                     print('No server address')
+            else:
+                print('Expired')
 
 
 if __name__ == '__main__':
