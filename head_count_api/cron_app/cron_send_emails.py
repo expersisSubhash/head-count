@@ -25,6 +25,7 @@ def main():
                 to_list.append(usr_obj.email)
             except Exception as e:
                 print(str(e))
+        print(to_list)
         # Get the cut out time
         queryset = SystemPreferences.objects.filter(key='server_address')
         if len(queryset) > 0:
@@ -37,6 +38,8 @@ def main():
             sent = send_email(to_list, content)
             if sent:
                 print('Notified successfully')
+        else:
+            print('No server address')
 
 
 if __name__ == '__main__':
