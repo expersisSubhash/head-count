@@ -1,0 +1,13 @@
+.date_range {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  margin-right:10px;
+  align-content: center
+}
+
+.grand_total {
+  margin-left: 10px;
+  /*background: #e5746b;*/
+
+}
