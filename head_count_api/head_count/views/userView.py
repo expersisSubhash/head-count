@@ -44,7 +44,7 @@ def login(request):
     # Save url in systempreferences
     SystemPreferences.objects.get_or_create(key='server_address', value=request.get_host(), defaults={
         'key': 'server_address',
-        'value':request.get_host()
+        'value': request.get_host()
     })
 
     return Response(context_data, status=HTTP_200_OK)

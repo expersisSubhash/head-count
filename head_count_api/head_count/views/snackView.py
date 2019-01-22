@@ -323,7 +323,7 @@ def get_snack_report_for_dates(request):
         # Get the
         from_date = datetime.fromtimestamp(data['from_date'] / 1000.0).date()
         to_date = datetime.fromtimestamp(data['to_date'] / 1000.0).date()
-        qs = UserSnackDayMapping.objects.filter(users_snack__date__range=[from_date, to_date])
+        qs = UserSnackDayMapping.objects.filter(users_snack__date__range=[from_date, to_date], choice=True)
         # Start from the from date and go till the end date
         records = list()
         grand_total = 0
