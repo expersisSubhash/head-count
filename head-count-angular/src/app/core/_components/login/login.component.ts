@@ -1,20 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../_services/auth.service';
-import {NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {AlertService} from '../../../shared/_components/alert/alert.service';
 import {NewUserComponent} from '../new-user/new-user.component';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {ForgotPasswordComponent} from '../forgot-password/forgot-password.component';
-import {filter} from 'rxjs/internal/operators';
+import {filter, takeWhile} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-
+export class LoginComponent implements OnInit, OnDestroy {
+  alive = true;
   loginFG: FormGroup;
   loginError = false;
   bsModalRef: BsModalRef;
@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private alertService: AlertService,
     private bsModalService: BsModalService,
+    private route: ActivatedRoute
   ) {
     this.loginFG = fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -36,6 +37,13 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('user')) {
       this.router.navigate([this.authService.redirectUrl || `/snack-detail`]);
+    } else {
+      this.route.queryParamMap.pipe(takeWhile(() => this.alive)).subscribe(response => {
+          const uid = response['params']['uid'];
+          if (uid) {
+            this.login({uid: uid});
+          }
+      });
     }
   }
 
@@ -52,7 +60,11 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.authService.login(this.loginFG.value).subscribe(data => {
+    this.login(this.loginFG.value);
+  }
+
+  login(formData) {
+    this.authService.login(formData).subscribe(data => {
         if (data['token']) {
           localStorage.setItem('token', JSON.stringify(data['token']));
           localStorage.setItem('user', btoa(JSON.stringify(data['user'])));
@@ -66,6 +78,10 @@ export class LoginComponent implements OnInit {
         this.loginError = true;
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.alive = false;
   }
 
   show_forgot_password() {

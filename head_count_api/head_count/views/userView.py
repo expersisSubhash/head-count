@@ -28,26 +28,49 @@ def login(request):
     context_data = dict()
     username = request.data.get("email")
     password = request.data.get("password")
-    if username is None or password is None:
-        return Response({'error': 'Please provide both username and password'},
-                        status=HTTP_401_UNAUTHORIZED)
-    user = authenticate(username=username, password=password)
-    if not user:
-        return Response({'error': 'Invalid Credentials'},
-                        status=HTTP_404_NOT_FOUND)
-    token, _ = Token.objects.get_or_create(user=user)
-    context_data['token'] = token.key
-    context_data['user'] = {'id': user.id, 'email': user.email,
-                            'first_name': user.first_name, 'last_name': user.last_name,
-                            'is_super': user.is_superuser}
+    token_key = request.data.get('uid')
+    if token_key:
+        return login_with_token(request)
+    else:
+        if username is None or password is None:
+            return Response({'error': 'Please provide both username and password'}, status=HTTP_401_UNAUTHORIZED)
+        user = authenticate(username=username, password=password)
+        if not user:
+            return Response({'error': 'Invalid Credentials'}, status=HTTP_404_NOT_FOUND)
 
-    # Save url in systempreferences
-    SystemPreferences.objects.get_or_create(key='server_address', value=request.get_host(), defaults={
-        'key': 'server_address',
-        'value': request.get_host()
-    })
+        token, _ = Token.objects.get_or_create(user=user)
+        context_data['token'] = token.key
+        context_data['user'] = {'id': user.id, 'email': user.email,
+                                'first_name': user.first_name, 'last_name': user.last_name,
+                                'is_super': user.is_superuser}
 
+        # Save url in system preferences
+        SystemPreferences.objects.get_or_create(key='server_address', value=request.get_host(), defaults={
+            'key': 'server_address',
+            'value': request.get_host()
+        })
     return Response(context_data, status=HTTP_200_OK)
+
+
+def login_with_token(request):
+    token_key = request.data.get('uid')
+    try:
+        context_data = dict()
+        token = Token.objects.get(key=token_key)
+        user = token.user
+        context_data['token'] = token.key
+        context_data['user'] = {'id': user.id, 'email': user.email,
+                                'first_name': user.first_name, 'last_name': user.last_name,
+                                'is_super': user.is_superuser}
+        # Save url in system preferences
+        SystemPreferences.objects.get_or_create(key='server_address', value=request.get_host(), defaults={
+            'key': 'server_address',
+            'value': request.get_host()
+        })
+        response = Response(context_data, status=HTTP_200_OK)
+    except Exception as e:
+        response = Response({'error': 'Invalid Credentials'}, status=HTTP_401_UNAUTHORIZED)
+    return response
 
 
 @api_view(['GET', 'POST'])
