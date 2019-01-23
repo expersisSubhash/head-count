@@ -66,7 +66,7 @@ ROOT_URLCONF = 'head_count_api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -151,3 +151,10 @@ except ImportError:
     print("Import Error for local_settings file")
 
 VERSION = "1.0.0"
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'snack.day.python@gmail.com'
+EMAIL_HOST_PASSWORD = 'snackday@2018'

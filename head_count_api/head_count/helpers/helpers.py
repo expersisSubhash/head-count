@@ -1,3 +1,6 @@
+from django.template.loader import get_template
+from django.core.mail import send_mail, EmailMessage
+from django.conf import settings
 import smtplib
 import string
 import random
@@ -64,3 +67,13 @@ def generate_random_password():
     return password
 
 
+def order_verification_email(context, recipient_list=list):
+    try:
+        subject = "This is the Test Email"
+        from_email = settings.EMAIL_HOST_USER
+        message = get_template('email/order_verification.html').render(context)
+        msg = EmailMessage(subject, message, to=recipient_list, from_email=from_email)
+        msg.content_subtype = 'html'
+        msg.send()
+    except Exception as e:
+        print(str(e))
