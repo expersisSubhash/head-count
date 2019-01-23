@@ -45,7 +45,7 @@ def main():
                             context['url'] = url
                             success = helpers.order_verification_email(subject, context, [usr_obj.email])
                             if success:
-                                print('Mail to ' + usr_obj.email + 'sent successfully')
+                                print('Mail to ' + usr_obj.email + ' sent successfully')
                         except Exception as e:
                             print(str(e))
             else:
