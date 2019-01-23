@@ -40,7 +40,7 @@
             <label class="th-header" style="color: black; vertical-align: center">PLACE YOUR ORDER</label>
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="!disable_choice_button">
           <button class="btn btn-success" (click)="toggle_order(1)" [disabled]="ordered">Yes, place my order</button>
           &nbsp;
           <button class="btn btn-danger" (click)="toggle_order(0)" [disabled]="!ordered">No, not today!</button>
