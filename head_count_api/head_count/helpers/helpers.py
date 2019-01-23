@@ -34,28 +34,19 @@ def get_custom_error_list(errors, custom_error_list=None):
     return custom_error_list
 
 
-def send_email(to_list, body):
-    server = None
-    success = False
+def send_email(subject, body, to_list):
+    success = 0
     try:
-        fromaddr = 'snack.day.python@gmail.com'
-        toaddrs = to_list
-        msg = body
-        username = 'snack.day.python@gmail.com'
-        password = 'snackday@2018'
-        server = smtplib.SMTP('smtp.gmail.com:587')
-        server.ehlo()
-        server.starttls()
-        server.login(username, password)
-        server.sendmail(fromaddr, toaddrs, msg)
-        server.quit()
-        success = True
+        subject = subject
+        from_email = settings.EMAIL_HOST_USER
+        message = body
+        msg = EmailMessage(subject, message, to=to_list, from_email=from_email)
+        msg.content_subtype = 'plain'
+        success = msg.send()
     except Exception as e:
         print(str(e))
-        if server:
-            server.quit()
 
-    return success
+    return True if success > 0 else False
 
 
 def generate_random_password():
@@ -67,13 +58,14 @@ def generate_random_password():
     return password
 
 
-def order_verification_email(context, recipient_list=list):
+def order_verification_email(subject, context, recipient_list=list):
+    success = 0
     try:
-        subject = "This is the Test Email"
         from_email = settings.EMAIL_HOST_USER
         message = get_template('email/order_verification.html').render(context)
         msg = EmailMessage(subject, message, to=recipient_list, from_email=from_email)
         msg.content_subtype = 'html'
-        msg.send()
+        success = msg.send()
     except Exception as e:
         print(str(e))
+    return True if success > 0 else False

@@ -106,8 +106,8 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
   }
 
 
-  toggle_order() {
-    this.ordered = !this.ordered;
+  toggle_order(choice) {
+    this.ordered = choice;
     const param = {};
     param['user_id'] = this.user.id;
     param['snack_day_id'] = this.todays_snack['id'];

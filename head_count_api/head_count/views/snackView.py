@@ -425,10 +425,11 @@ def notify_change():
     snack_day = get_todays_snack()
     if snack_day:
         to_list = get_user_emails_for_snack_day(snack_day)
+        subject = 'Change in Snack'
         # Send the mail with this password
         content = "There is a change in Snack that was scheduled for Today, Please visit the site and update " \
                   "your choice, The new snack is " + snack_day.snack_for_day.name
-        sent = helpers.send_email(to_list, content)
+        sent = helpers.send_email(subject, content, to_list)
         if sent:
             print('Email sent successfully')
 
@@ -438,8 +439,9 @@ def notify_cancellation(today, obj):
         if obj:
             to_list = get_user_emails_for_snack_day(obj)
             # Send the mail with this password
+            subject = 'Snack Canceled'
             content = "Today's snack has been canceled, Please contact HR for more information"
-            sent = helpers.send_email(to_list, content)
+            sent = helpers.send_email(subject, content, to_list)
             if sent:
                 print('Email sent successfully')
     else:

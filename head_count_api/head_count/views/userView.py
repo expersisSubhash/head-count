@@ -101,13 +101,13 @@ def user_list(request):
                 subject = 'Welcome'
                 # Send the mail with this password
                 to_list = [email]
-                content = subject + ", Following are your login details \n username: " + email + "\n" + "password:" \
+                content = ", Following are your login details \n username: " + email + "\n" + "password:" \
                           + password + "\nPlease make sure to change your password to something that you can remember."
 
                 url = request.get_host()
                 url = url + '/login'
                 content = content + "\n" + url
-                sent = helpers.send_email(to_list, content)
+                sent = helpers.send_email(subject, content, to_list)
                 if sent:
                     print('Email with password sent successfully')
             else:
@@ -238,7 +238,7 @@ def forgot_password(request):
             to_list = [email]
             content = subject + " Please use following password to login, Please make sure to reset password after " \
                                 "you login \n" + password
-            sent = helpers.send_email(to_list, content)
+            sent = helpers.send_email(subject, content, to_list)
             if sent:
                 user.set_password(password)
                 user.save()
