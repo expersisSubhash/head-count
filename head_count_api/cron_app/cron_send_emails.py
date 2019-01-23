@@ -20,6 +20,7 @@ def main():
             queryset = SystemPreferences.objects.filter(key='server_address')
             if len(queryset) > 0:
                 uri = queryset[0].value
+                uri = 'http://' + uri
                 uri += '/login'
 
                 # Get today's snack
