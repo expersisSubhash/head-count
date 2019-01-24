@@ -51,6 +51,10 @@ export class UserListComponent implements OnInit {
     });
   }
 
+  notify() {
+    console.log('I am in');
+  }
+
   newUser(obj?) {
     this.bsModalRef = this.bsModalService.show(NewUserComponent, {ignoreBackdropClick: true});
     if (obj) {
