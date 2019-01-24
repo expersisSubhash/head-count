@@ -7,4 +7,5 @@ export class User {
   username: string;
   password: string;
   uid?: string;
+  unsubscribed: boolean;
 }

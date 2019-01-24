@@ -40,11 +40,13 @@
 
           <td>
             <span class="button-separator">
-                    <a title="Unsubscribe" (click)="notify()">
-                  <img src='../../../../assets/images/unsubscribed.png'
+              <a  (click)="toggleEmailSubscription(obj)">
+                  <img title="Unsubscribed, click to subscribe again" *ngIf="obj.unsubscribed" src='../../../../assets/images/unsubscribed.png'
                        style="width: 20px; height: 20px; margin-top: -5px">
-                </a>
-                  </span>
+                <img title="Subscribed, click to unsubscribe" *ngIf="!obj.unsubscribed" src='../../../../assets/images/subscribed.png'
+                       style="width: 20px; height: 20px; margin-top: -5px">
+              </a>
+            </span>
             <span style="margin-left: 5px;"><a (click)="newUser(obj)"><i class="glyphicon glyphicon-pencil"
                                                                          title="Modify User's details"
                                                                          style="color: #585a5e"></i></a></span>

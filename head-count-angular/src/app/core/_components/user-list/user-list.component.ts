@@ -51,10 +51,6 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  notify() {
-    console.log('I am in');
-  }
-
   newUser(obj?) {
     this.bsModalRef = this.bsModalService.show(NewUserComponent, {ignoreBackdropClick: true});
     if (obj) {
@@ -70,6 +66,7 @@ export class UserListComponent implements OnInit {
       data => {
          if (data['success']) {
            this.alertService.success('Changes saved successfully');
+           this.getuserList();
          }
       },
       error => {

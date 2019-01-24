@@ -275,8 +275,10 @@ def toggle_email_subscription(request):
             try:
                 obj = UnSubscribedUsers.objects.get(user_id=user_id)
                 obj.delete()
+                context_data['success'] = True
             except UnSubscribedUsers.DoesNotExist as e:
                 UnSubscribedUsers.objects.create(user_id=user_id)
+                context_data['success'] = True
             except Exception as e:
                 error = True
                 msg = "Something went wrong while unsubribing user. Error : " + str(e)

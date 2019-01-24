@@ -33,8 +33,9 @@ def main():
                     usrsnack = UserSnackDayMapping.objects.filter(users_snack=snack_obj).values_list('user_id',
                                                                                                      flat=True)
                     # Remove the common items from user id and this list
-                    new_user_ids = list(set(user_id_list) - set(usrsnack))
-
+                    user_ids = list(set(user_id_list) - set(usrsnack))
+                    unsubscribed_users = UnSubscribedUsers.objects.values_list('user_id', flat=True)
+                    new_user_ids = list(set(user_ids) - set(unsubscribed_users))
                     subject = "Today's Snack"
                     context = {'snack': snack_obj.snack_for_day.name}
                     # Create a to list to send the emails
