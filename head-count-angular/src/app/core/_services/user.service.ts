@@ -37,4 +37,9 @@ export class UserService {
   forgotPassword(formData): Observable<any> {
     return this.http.post(`/api/forgot_password/`, formData);
   }
+
+  toggleEmailSubscription(id): Observable<any> {
+    return this.http.post(`/api/toggleEmailSubscription/`, id);
+
+  }
 }

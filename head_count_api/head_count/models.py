@@ -36,6 +36,18 @@ class SystemPreferences(models.Model):
         return self.key
 
 
+class DefaultChoice(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    default_choice = models.BooleanField(default=False)
+
+
+class UnSubscribedUsers(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+
+
+
+
 
 
 

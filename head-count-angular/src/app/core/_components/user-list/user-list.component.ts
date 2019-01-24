@@ -5,6 +5,7 @@ import {takeWhile} from 'rxjs/internal/operators';
 import {NewUserComponent} from '../new-user/new-user.component';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {ConfirmAlertBoxService} from '../../_services/confirm-alert-box.service';
+import {AlertService} from '../../../shared/_components/alert/alert.service';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class UserListComponent implements OnInit {
   constructor(
     private userService: UserService,
     private bsModalService: BsModalService,
-    private confirmBoxService: ConfirmAlertBoxService
+    private confirmBoxService: ConfirmAlertBoxService,
+    private alertService: AlertService
   ) {
   }
 
@@ -58,6 +60,20 @@ export class UserListComponent implements OnInit {
       this.getuserList();
     });
   }
+
+  toggleEmailSubscription(obj) {
+      this.userService.toggleEmailSubscription(obj.id).pipe(takeWhile(() => this.alive)).subscribe(
+      data => {
+         if (data['success']) {
+           this.alertService.success('Changes saved successfully');
+         }
+      },
+      error => {
+        this.alertService.error(error);
+      });
 }
+
+}
+
 
 

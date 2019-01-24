@@ -20,6 +20,7 @@ const appRoutes: Routes = [
       {path: 'users', component: UserListComponent, canActivate: [AuthGuard]},
       {path: 'snack-day', component: SnackDayComponent, canActivate: [AuthGuard]},
       {path: 'reports', component: ReportsComponent, canActivate: [AuthGuard]},
+
     ]
   },
   {path: '**', component: PageNotFoundComponent}

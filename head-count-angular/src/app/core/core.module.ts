@@ -22,6 +22,7 @@ import {ConfirmAlertBoxComponent} from './_components/confirm-alert-box/confirm-
 import { ChangePasswordComponent } from './_components/change-password/change-password.component';
 import { ForgotPasswordComponent } from './_components/forgot-password/forgot-password.component';
 import { ReportsComponent } from './_components/reports/reports.component';
+import { DefaultChoiceUserComponent } from './_components/default-choice-user/default-choice-user.component';
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import { ReportsComponent } from './_components/reports/reports.component';
     ConfirmAlertBoxComponent,
     ChangePasswordComponent,
     ForgotPasswordComponent,
-    ReportsComponent
+    ReportsComponent,
+    DefaultChoiceUserComponent,
   ],
   providers: [
     AuthService,
