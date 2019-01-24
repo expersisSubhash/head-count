@@ -41,9 +41,9 @@
           </td>
         </tr>
         <tr *ngIf="!disable_choice_button">
-          <button class="btn btn-success" (click)="toggle_order(1)" [disabled]="ordered">Yes, place my order</button>
+          <button class="btn btn-success" (click)="toggle_order(1)" [disabled]="ordered == 1">Yes, place my order</button>
           &nbsp;
-          <button class="btn btn-danger" (click)="toggle_order(0)" [disabled]="!ordered">No, not today!</button>
+          <button class="btn btn-danger" (click)="toggle_order(0)" [disabled]="ordered == 0">No, not today!</button>
         </tr>
         <tr><td style="border: none"></td></tr>
 

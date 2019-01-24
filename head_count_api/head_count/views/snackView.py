@@ -179,7 +179,9 @@ def get_snack_for_today(request, pk):
                                                                          users_snack=snack_day_obj)
             if len(user_snack_mapping_list) > 0:
                 user_snack_mapping_obj = user_snack_mapping_list[0]
-                context_data['choice'] = user_snack_mapping_obj.choice
+                context_data['choice'] = 1 if user_snack_mapping_obj.choice else 0
+            else:
+                context_data['choice'] = -1
     except Exception as e:
         msg = "Something went wrong while getting today's Snack. Message : " + str(e)
         error = True

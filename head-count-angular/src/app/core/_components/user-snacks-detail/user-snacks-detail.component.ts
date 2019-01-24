@@ -16,7 +16,7 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
   alive = true;
   todays_snack: TodaysSnack;
   snack_info: Snack;
-  ordered = false;
+  ordered = -1;
   user: any;
   userList: any;
   totalCount: 0;
@@ -96,7 +96,7 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
           if (this.snack_info && this.snack_info.name) {
             this.snack_name = this.snack_info.name;
           }
-          this.ordered = data['choice'];
+            this.ordered = data['choice'];
         }
       },
       err => {
