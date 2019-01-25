@@ -32,7 +32,7 @@
       <table class="table text-center" style="border-radius: 5px;">
         <tr class="bg-sky" style="height: 40px">
           <th class="th-header">EMPLOYEE NAME</th>
-          <th style="width: 90px;"></th>
+          <th style="width: 130px;"></th>
         </tr>
         <tbody>
         <tr class="table-bg" *ngFor="let obj of userList;">
@@ -40,11 +40,17 @@
 
           <td>
             <span class="button-separator">
+              <a  (click)="toggleOrder(obj)">
+                  <img title="Ordered" src='../../../../assets/images/thumbs-up.png'
+                       style="width: 20px; height: 20px; margin-top: -5px">
+              </a>
+            </span>
+            <span class="button-separator">
               <a  (click)="toggleEmailSubscription(obj)">
                   <img title="Unsubscribed, click to subscribe again" *ngIf="obj.unsubscribed" src='../../../../assets/images/unsubscribed.png'
                        style="width: 20px; height: 20px; margin-top: -5px">
                 <img title="Subscribed, click to unsubscribe" *ngIf="!obj.unsubscribed" src='../../../../assets/images/subscribed.png'
-                       style="width: 20px; height: 20px; margin-top: -5px">
+                       style="width: 20px; height: 20px; margin-top: -5px; margin-left: 4px">
               </a>
             </span>
             <span style="margin-left: 5px;"><a (click)="newUser(obj)"><i class="glyphicon glyphicon-pencil"

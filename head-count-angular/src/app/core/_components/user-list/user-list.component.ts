@@ -74,6 +74,9 @@ export class UserListComponent implements OnInit {
       });
 }
 
+  toggleOrder(obj) {
+}
+
 }
 
 
