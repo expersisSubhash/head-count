@@ -40,6 +40,10 @@ export class UserService {
 
   toggleEmailSubscription(id): Observable<any> {
     return this.http.post(`/api/toggleEmailSubscription/`, id);
+  }
+
+  changeOrderStatusForUser(parmas): Observable<any> {
+    return this.http.post(`/api/changeOrderStatusForUser/`, parmas);
 
   }
 }

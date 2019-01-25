@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from '../../_services/user.service';
 import {User} from '../../_models/user';
 import {takeWhile} from 'rxjs/internal/operators';
@@ -13,7 +13,7 @@ import {AlertService} from '../../../shared/_components/alert/alert.service';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnDestroy {
   private alive = true;
   userList: Array<User>;
   bsModalRef: BsModalRef;
@@ -34,6 +34,7 @@ export class UserListComponent implements OnInit {
     this.userService.getAllUsers().pipe(takeWhile(() => this.alive)).subscribe(
       data => {
         this.userList = data['user_list'];
+        console.log(this.userList);
       },
       error => {
         console.log(error);
@@ -62,17 +63,40 @@ export class UserListComponent implements OnInit {
   }
 
   toggleEmailSubscription(obj) {
-      this.userService.toggleEmailSubscription(obj.id).pipe(takeWhile(() => this.alive)).subscribe(
+    this.userService.toggleEmailSubscription(obj.id).pipe(takeWhile(() => this.alive)).subscribe(
       data => {
-         if (data['success']) {
-           this.alertService.success('Changes saved successfully');
-           this.getuserList();
-         }
+        if (data['success']) {
+          this.alertService.success('Changes saved successfully');
+          this.getuserList();
+        }
       },
       error => {
         this.alertService.error(error);
       });
-}
+  }
+
+  change_order_status(status, user_id) {
+    const params = {
+      'user_id': user_id,
+      'status': status
+    };
+    this.userService.changeOrderStatusForUser(params).pipe(takeWhile(() => this.alive)).subscribe(
+      data => {
+        if (data['msg']) {
+          this.alertService.success(data['msg']);
+        }
+        this.getuserList();
+      },
+      error1 => {
+        this.alertService.error(error1);
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.alive = false;
+  }
+
 
   toggleOrder(obj) {
 }

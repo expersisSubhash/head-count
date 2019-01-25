@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^preferences/$', preferencesView.preferences_list),
     url(r'^preferences/$', preferencesView.preferences_list),
     url(r'^getSnackReport/$', snackView.get_snack_report_for_dates),
-    url(r'^toggleEmailSubscription/$', userView.toggle_email_subscription)
+    url(r'^toggleEmailSubscription/$', userView.toggle_email_subscription),
+    url('changeOrderStatusForUser/$', userView.change_order_status_for_user),
+
 ]
 

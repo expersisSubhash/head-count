@@ -8,4 +8,5 @@ export class User {
   password: string;
   uid?: string;
   unsubscribed: boolean;
+  is_ordered: number;
 }

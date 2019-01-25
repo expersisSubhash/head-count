@@ -17,7 +17,9 @@ from head_count.models import User
 from head_count.serializers.userSerializer import UserSerializer
 from head_count.helpers.helpers import get_custom_error_list
 from head_count.helpers import constants, helpers
-from head_count.models import SystemPreferences, UnSubscribedUsers
+from head_count.models import SystemPreferences, UnSubscribedUsers, UserSnackDayMapping
+from head_count.views.snackView import get_todays_snack
+
 
 
 @csrf_exempt
@@ -290,3 +292,54 @@ def toggle_email_subscription(request):
     context_data[constants.RESPONSE_ERROR] = error
     context_data[constants.RESPONSE_MESSAGE] = msg
     return JsonResponse(context_data, status=200)
+
+
+@api_view(['GET', 'POST', 'DELETE', 'PUT'])
+@authentication_classes([])
+@permission_classes((AllowAny,))
+def change_order_status_for_user(request):
+    context_data = dict()
+    try:
+        data = JSONParser().parse(request)
+        # Get the user id
+        user_id = data['user_id']
+        try:
+            user = User.objects.get(id=user_id)
+            error = False
+            msg = 'user found'
+        except User.DoesNotExist:
+            user = None
+            error = True
+            msg = user_id + ' does not exist in our records, Please contact Administrator'
+
+        if not error:
+            # Check if there is snack for today
+            snack_for_day = get_todays_snack()
+            new_status = -1
+            if snack_for_day:
+                # Get the status
+                current_status = data['status']
+                if current_status == -1:
+                    new_status = 1
+                elif current_status == 1:
+                    new_status = 0
+                elif current_status == 0:
+                    new_status = 1
+
+                obj, created = UserSnackDayMapping.objects.get_or_create(users_snack=snack_for_day, user_id=user_id,
+                                                                         defaults={'users_snack': snack_for_day,
+                                                                                   'user_id': user_id})
+                if obj:
+                    obj.choice = True if new_status == 1 else False
+                    obj.save()
+                    msg = 'Changes saved successfully'
+            else:
+                msg = 'Can not save the changes, Snack is not specified for today'
+    except Exception as e:
+        error = True
+        msg = "Something went wrong while processing that request. Error : " + str(e)
+
+    context_data[constants.RESPONSE_ERROR] = error
+    context_data[constants.RESPONSE_MESSAGE] = msg
+    return JsonResponse(context_data, status=200)
+

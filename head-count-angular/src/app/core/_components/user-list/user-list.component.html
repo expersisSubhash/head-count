@@ -39,18 +39,27 @@
           <td class="rw-title" style="text-align: left">{{ obj.first_name }} {{ ' ' + obj.last_name }}</td>
 
           <td>
-            <span class="button-separator">
-              <a  (click)="toggleOrder(obj)">
-                  <img title="Ordered" src='../../../../assets/images/thumbs-up.png'
-                       style="width: 20px; height: 20px; margin-top: -5px">
+            <span>
+              <a (click)="change_order_status(obj.is_ordered, obj.id)">
+                <img *ngIf="obj.is_ordered === -1" title="User have not specified anything, Click to mark Yes"
+                     src='../../../../assets/images/question.png'
+                     style="width: 20px; height: 20px; margin-top: -5px">
+                <img *ngIf="obj.is_ordered === 1" title="User specified Yes, Click to mark as No"
+                     src='../../../../assets/images/thumbs-up.png'
+                     style="width: 20px; height: 20px; margin-top: -5px">
+                <img *ngIf="obj.is_ordered === 0" title="User specified No, Click to mark Yes"
+                     src='../../../../assets/images/thumb-down.png'
+                     style="width: 20px; height: 20px; margin-top: -5px">
               </a>
             </span>
             <span class="button-separator">
-              <a  (click)="toggleEmailSubscription(obj)">
-                  <img title="Unsubscribed, click to subscribe again" *ngIf="obj.unsubscribed" src='../../../../assets/images/unsubscribed.png'
+              <a (click)="toggleEmailSubscription(obj)">
+                  <img title="Unsubscribed, click to subscribe again" *ngIf="obj.unsubscribed"
+                       src='../../../../assets/images/unsubscribed.png'
                        style="width: 20px; height: 20px; margin-top: -5px">
-                <img title="Subscribed, click to unsubscribe" *ngIf="!obj.unsubscribed" src='../../../../assets/images/subscribed.png'
-                       style="width: 20px; height: 20px; margin-top: -5px; margin-left: 4px">
+                <img title="Subscribed, click to unsubscribe" *ngIf="!obj.unsubscribed"
+                     src='../../../../assets/images/subscribed.png'
+                     style="width: 20px; height: 20px; margin-top: -5px; margin-left: 4px">
               </a>
             </span>
             <span style="margin-left: 5px;"><a (click)="newUser(obj)"><i class="glyphicon glyphicon-pencil"
