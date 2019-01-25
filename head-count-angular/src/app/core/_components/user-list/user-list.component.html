@@ -56,10 +56,10 @@
               <a (click)="toggleEmailSubscription(obj)">
                   <img title="Unsubscribed, click to subscribe again" *ngIf="obj.unsubscribed"
                        src='../../../../assets/images/unsubscribed.png'
-                       style="width: 20px; height: 20px; margin-top: -5px">
+                       style="width: 20px; height: 20px; margin-top: -5px; margin-left: 5px">
                 <img title="Subscribed, click to unsubscribe" *ngIf="!obj.unsubscribed"
                      src='../../../../assets/images/subscribed.png'
-                     style="width: 20px; height: 20px; margin-top: -5px; margin-left: 4px">
+                     style="width: 20px; height: 20px; margin-top: -5px; margin-left: 5px">
               </a>
             </span>
             <span style="margin-left: 5px;"><a (click)="newUser(obj)"><i class="glyphicon glyphicon-pencil"
