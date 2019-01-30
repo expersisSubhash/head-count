@@ -68,7 +68,8 @@ export class SnackDayComponent implements OnInit, OnDestroy {
     if (data) {
       f.patchValue(data);
       const my_date = new Date(data['date']);
-      if (my_date.getDate() < (new Date().getDate())) {
+      const today = new Date(new Date().setHours(0, 0, 0, 0));
+      if (my_date < today) {
         f.disable();
       }
     }
