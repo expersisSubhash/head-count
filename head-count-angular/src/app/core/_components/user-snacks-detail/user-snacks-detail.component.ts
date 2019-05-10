@@ -72,8 +72,14 @@ export class UserSnacksDetailComponent implements OnInit, OnDestroy {
         if (data['preferences']) {
           const tmp = data['preferences'][0];
           this.cut_out_time = tmp['value'];
-          const val_converted = this.cut_out_time % 12;
-          this.display_time = val_converted.toString() + ' PM';
+          let val_converted = this.cut_out_time % 12;
+          let  suffix = ' PM';
+          if (val_converted === 0) {
+              val_converted = 12;
+          } else if (val_converted < 12 ) {
+            suffix = ' AM';
+          }
+          this.display_time = val_converted.toString() + suffix;
 
           const time = new Date().getHours();
           if (time >= this.cut_out_time) {

@@ -46,11 +46,15 @@ def login(request):
                                 'first_name': user.first_name, 'last_name': user.last_name,
                                 'is_super': user.is_superuser}
 
-        # Save url in system preferences
-        SystemPreferences.objects.get_or_create(key='server_address', value=request.get_host(), defaults={
-            'key': 'server_address',
-            'value': request.get_host()
-        })
+        try:
+            # Save url in system preferences
+            SystemPreferences.objects.get_or_create(key='server_address', value=request.get_host(), defaults={
+                'key': 'server_address',
+                'value': request.get_host()
+            })
+        except Exception as e:
+            print(str(e))
+
     return Response(context_data, status=HTTP_200_OK)
 
 
